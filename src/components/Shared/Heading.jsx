@@ -1,0 +1,21 @@
+import PropTypes from 'prop-types'
+import { FaHeartbeat } from 'react-icons/fa'
+const Heading = ({ title, subtitle, center }) => {
+  return (
+    <div className={`${center ? 'text-center' : 'text-start'} mb-8 px-[450px]`} >
+      <div className='text-3xl font-bold text-lightBlue'>{title}</div>
+      <p className="flex justify-center my-2">
+        <FaHeartbeat className='text-2xl text-lightBlue ' />
+      </p>
+      <div className=' text-neutral-500 mt-2 font-normal text-base'>{subtitle}</div>
+    </div >
+  )
+}
+
+Heading.propTypes = {
+  title: PropTypes.string,
+  subtitle: PropTypes.string,
+  center: PropTypes.bool,
+}
+
+export default Heading

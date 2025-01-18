@@ -1,0 +1,15 @@
+.active {
+    background-color: #f4f4f4;
+    color: #333;
+    border-left: 4px solid #333;
+    border-radius: 0 50px 50px 0;
+    margin-left: -4px;
+    padding-left: 16px;
+    padding-right: 16px;
+    /* padding: 5px; */
+    transition: background-color 0.3s ease;
+}
+.active:hover {
+    background-color: #f4f4f4;
+    color: #333;
+}
