@@ -3,8 +3,7 @@ import CampForm from "../../components/Dashboard/AddCamp/CampForm";
 
 
 const AddCamp = () => {
-    return <div>
-
+    return <div> 
         <CampForm />
     </div>;
 };

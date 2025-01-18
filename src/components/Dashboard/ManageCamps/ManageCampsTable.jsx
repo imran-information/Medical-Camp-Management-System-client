@@ -1,10 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import ConfirmDeleteDialog from './ConfirmDeleteDialog';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import Swal from 'sweetalert2';
 
 
-const ManageCampsTable = ({ allCamps: camps, handleDelete }) => {
-    const navigate = useNavigate();
+const ManageCampsTable = ({ allCamps: camps, refetch }) => {
+    const axiosSecure = useAxiosSecure();
+    const [open, setOpen] = useState(false);
+    const [campId, setCampId] = useState(null);
+
+    const handleOpen = (campId) => {
+        setCampId(campId)
+        setOpen(true);
+    }
+
+    const OnClose = () => {
+        setOpen(false);
+    }
+    const onConfirm = async () => {
+        // Delete camp
+        const { data } = await axiosSecure.delete(`/camps/${campId}`);
+        if (data.deletedCount === 1) {
+            Swal.fire({
+                title: "Camp Deleted Successfully",
+                icon: "success",
+                draggable: true
+            });
+            setOpen(false);
+            refetch();
+        }
+    }
 
     return (
         <TableContainer component={Paper} sx={{ mt: 3 }}>
@@ -22,24 +49,25 @@ const ManageCampsTable = ({ allCamps: camps, handleDelete }) => {
                     {camps.map((camp) => (
                         <TableRow key={camp._id}>
                             <TableCell>{camp.name}</TableCell>
-                            <TableCell>{camp.dateTime}</TableCell>
+                            <TableCell>{camp.date}</TableCell>
                             <TableCell>{camp.location}</TableCell>
                             <TableCell>{camp.healthcareProfessional}</TableCell>
                             <TableCell>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    size="small"
-                                    onClick={() => navigate(`/update-camp/${camp.id}`)}
-                                    sx={{ mr: 1 }}
-                                >
-                                    Edit
-                                </Button>
+                                <Link to={`/dashboard/update-camp/${camp._id}`} >
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        size="small"
+                                        sx={{ mr: 1 }}
+                                    >
+                                        Edit
+                                    </Button>
+                                </Link>
                                 <Button
                                     variant="contained"
                                     color="error"
                                     size="small"
-                                    onClick={() => handleDelete(camp.id)}
+                                    onClick={() => handleOpen(camp._id)}
                                 >
                                     Delete
                                 </Button>
@@ -48,7 +76,7 @@ const ManageCampsTable = ({ allCamps: camps, handleDelete }) => {
                     ))}
                 </TableBody>
             </Table>
-            
+            <ConfirmDeleteDialog open={open} onClose={OnClose} onConfirm={onConfirm} />
         </TableContainer>
     );
 };

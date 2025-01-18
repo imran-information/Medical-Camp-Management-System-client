@@ -12,6 +12,7 @@ import { useQuery } from '@tanstack/react-query';
 import useAuth from '../../hooks/useAuth';
 import LoadingSpinner from '../../components/Shared/LoadingSpinner';
 import Swal from 'sweetalert2';
+import Heading from '../../components/Shared/Heading';
 
 const OrganizerProfile = () => {
     const [profile, setProfile] = useState({
@@ -91,6 +92,7 @@ const OrganizerProfile = () => {
 
     return (
         <div className="flex flex-col items-center p-4">
+            <Heading title='Organizer Profile' subtitle='Update your profile information' center />
             {!isEditing ? (
                 <div className="text-center ">
                     <Avatar

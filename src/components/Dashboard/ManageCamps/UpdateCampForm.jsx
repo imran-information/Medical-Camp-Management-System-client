@@ -1,49 +1,68 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button, TextField, Typography, Box } from '@mui/material';
-import { uploadImage } from '../../../utility/utility';
+import { useParams, useNavigate } from 'react-router-dom';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
+import { useQuery } from '@tanstack/react-query';
+import LoadingSpinner from '../../Shared/LoadingSpinner';
+import { uploadImage } from '../../../utility/utility';
 
-const CampForm = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const axiosSecure = useAxiosSecure()
+const UpdateCampForm = () => {
+    const { campId } = useParams();
+    const navigate = useNavigate();
+    const axiosSecure = useAxiosSecure();
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
 
-    const onSubmit = async (data) => {
+    const { data: updateCampData, isLoading, refetch } = useQuery({
+        queryKey: ['camp', campId],
+        queryFn: async () => {
+            const { data } = await axiosSecure.get(`/camps/${campId}`);
+            return data;
+        },
+    })
 
-        const file = data.imageFile[0];
-        const image = await uploadImage(file);
+    if (isLoading) return <LoadingSpinner />
+    const { name, image, fees, date, time, location, healthcareProfessional, participantCount, description } = updateCampData
 
-        const campData = {
-            name: data.campName,
-            image: image,
-            fees: data.fees,
-            date: data.dateTime,
-            time: data.dateTime,
-            location: data.location,
-            healthcareProfessional: data.professionalName,
-            participantCount: data.participantCount,
-            description: data.description,
-
-        }
-
+    const onSubmit = async (formData) => {
         try {
-            const { data } = await axiosSecure.post('/camps', campData);
-            if (data.insertedId) {
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Your work has been saved",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+            let imageUrl = formData.image;
+            if (formData.imageFile && formData.imageFile[0]) {
+                const file = formData.imageFile[0];
+                imageUrl = await uploadImage(file);
+            }
 
+            const campData = {
+                name: formData.campName,
+                image: imageUrl,
+                fees: formData.fees,
+                date: formData.dateTime,
+                time: formData.dateTime,
+                location: formData.location,
+                healthcareProfessional: formData.professionalName,
+                participantCount: formData.participantCount,
+                description: formData.description,
+            };
+
+            if (campId) {
+                const { data } = await axiosSecure.put(`/camps/${campId}`, campData);
+                if (data.modifiedCount === 1) {
+                    refetch()
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Camp updated successfully!',
+                        timer: 1500,
+                    });
+                    navigate('/dashboard/manage-camps');
+
+                }
             }
         } catch (error) {
             Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Something went wrong!",
+                icon: 'error',
+                title: 'Submission Error',
+                text: 'Something went wrong. Please try again.',
             });
         }
     };
@@ -62,29 +81,43 @@ const CampForm = () => {
             }}
         >
             <Typography variant="h4" component="h1" align="center" mb={3}>
-                Camp Registration
+                {campId ? 'Update Camp' : 'Create Camp'}
             </Typography>
 
             <Box mb={3}>
                 <TextField
                     label="Camp Name"
+                    defaultValue={name}
                     fullWidth
                     {...register('campName', { required: 'Camp Name is required' })}
                     error={!!errors.campName}
                     helperText={errors.campName?.message}
                 />
             </Box>
-
             <Box mb={3}>
                 <Typography variant="body1" mb={1}>
                     Choose Image File:
                 </Typography>
+
+                {/* Image Preview */}
+                {image && (
+                    <Box mb={2}>
+                        <img
+
+                            src={image}
+                            alt="Camp Preview"
+                            style={{ maxWidth: '20%', height: 'auto', borderRadius: '8px' }}
+                        />
+                    </Box>
+                )}
+
+                {/* File Input */}
                 <input
                     type="file"
                     accept="image/*"
-
-                    {...register('imageFile', { required: 'Image file is required' })}
+                    {...register('imageFile')}
                 />
+
                 {errors.imageFile && (
                     <Typography color="error" variant="body2">
                         {errors.imageFile.message}
@@ -96,6 +129,7 @@ const CampForm = () => {
                 <TextField
                     label="Camp Fees"
                     type="number"
+                    defaultValue={fees}
                     fullWidth
                     {...register('fees', { required: 'Camp Fees are required' })}
                     error={!!errors.fees}
@@ -107,6 +141,7 @@ const CampForm = () => {
                 <TextField
                     label="Date & Time"
                     type="datetime-local"
+                    defaultValue={date}
                     fullWidth
                     {...register('dateTime', { required: 'Date & Time is required' })}
                     InputLabelProps={{ shrink: true }}
@@ -118,6 +153,7 @@ const CampForm = () => {
             <Box mb={3}>
                 <TextField
                     label="Location"
+                    defaultValue={location}
                     fullWidth
                     {...register('location', { required: 'Location is required' })}
                     error={!!errors.location}
@@ -129,6 +165,7 @@ const CampForm = () => {
                 <TextField
                     label="Healthcare Professional Name"
                     fullWidth
+                    defaultValue={healthcareProfessional}
                     {...register('professionalName', { required: 'Healthcare Professional Name is required' })}
                     error={!!errors.professionalName}
                     helperText={errors.professionalName?.message}
@@ -140,7 +177,7 @@ const CampForm = () => {
                     label="Participant Count"
                     type="number"
                     fullWidth
-                    value={0}
+                    defaultValue={participantCount}
                     InputProps={{
                         readOnly: true,
                     }}
@@ -152,6 +189,7 @@ const CampForm = () => {
                     label="Description"
                     multiline
                     rows={4}
+                    defaultValue={description}
                     fullWidth
                     {...register('description', { required: 'Description is required' })}
                     error={!!errors.description}
@@ -166,10 +204,10 @@ const CampForm = () => {
                 fullWidth
                 sx={{ padding: 1.5, fontSize: 16 }}
             >
-                Submit
+                Update Camp
             </Button>
         </Box>
     );
 };
 
-export default CampForm;
+export default UpdateCampForm;
