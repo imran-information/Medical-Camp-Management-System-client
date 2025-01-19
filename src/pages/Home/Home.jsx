@@ -20,7 +20,7 @@ const Home = () => {
     })
 
     if (isLoading) return <LoadingSpinner />
-    console.log(feedbacks);
+    // console.log(feedbacks);
     return (
         <div className='my-2'>
             <Banner />

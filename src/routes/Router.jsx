@@ -15,6 +15,7 @@ import ManageRegisteredCamps from "../pages/Dashboard/ManageRegisteredCamps";
 import CampUpdate from "../pages/Dashboard/CampUpdate";
 import PrivetRoute from "./PrivetRoute";
 import ParticipantProfile from "../pages/Dashboard/Participant/ParticipantProfile";
+import Analytics from "../pages/Dashboard/Participant/Analytics";
 
 
 
@@ -93,7 +94,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "analytics",
-                element: "Analytics"
+                element: <Analytics />
             },
             {
                 path: "registered-camps",
