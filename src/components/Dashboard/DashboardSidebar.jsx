@@ -7,8 +7,14 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import { IoCallSharp } from "react-icons/io5";
 import profile from '../../assets/images/doctor.png'
 import '../../components/Dashboard/DashboardSidebar.css'
+import useOrganizer from '../../hooks/useOrganizer';
+import LoadingSpinner from '../Shared/LoadingSpinner';
 
 const Dashboard = () => {
+    const [isOrganizer, isLoading] = useOrganizer();
+    if (isLoading) return <LoadingSpinner />;
+    console.log(isOrganizer);
+
     return (
         <div className='flex'>
             <div className="w-80 bg-lightBlue text-white p-5 min-h-screen ">
@@ -16,15 +22,24 @@ const Dashboard = () => {
                     <DashboardIcon />
                     <h4 className='text-2xl font-semibold ml-2'>Medical Camp</h4>
                 </Link>
+                {/* organizer profile and camp management */}
+                {
+                    isOrganizer
+                        ? <ul className='mt-16 uppercase'>
+                            <li><NavLink className='flex items-center gap-2 my-4 font-medium' to='/dashboard/organizer-profile'> <img className='w-5' src={profile} alt="" />Organizer Profile</NavLink></li>
+                            <li><NavLink className='flex items-center gap-2 my-4 font-medium' to='/dashboard/add-camp'><FaPlusCircle className='text-xl font-bold' />Add Camp</NavLink></li>
+                            <li><NavLink className='flex items-center gap-2 my-4 font-medium' to='/dashboard/manage-camps'><FaCreditCard className='text-xl font-bold' /> Manage Camps</NavLink></li>
+                            <li><NavLink className='flex items-center gap-2 my-4 font-medium' to='/dashboard/manage-registered-camps'><MdOutlineCreditScore className='text-xl font-bold' /> Manage Registered Camps</NavLink></li>
+                        </ul>
+                        : <ul className='mt-16 uppercase'>
+                            <li><NavLink className='flex items-center gap-2 my-4 font-medium' to='/dashboard/participant-profile'> <img className='w-5' src={profile} alt="" />Participant Profile</NavLink></li>
+                            <li><NavLink className='flex items-center gap-2 my-4 font-medium' to='/dashboard/analytics'><FaPlusCircle className='text-xl font-bold' />Analytics</NavLink></li>
+                            <li><NavLink className='flex items-center gap-2 my-4 font-medium' to='/dashboard/registered-camps'><FaCreditCard className='text-xl font-bold' />Registered Camps</NavLink></li>
+                            <li><NavLink className='flex items-center gap-2 my-4 font-medium' to='/dashboard/payment-history'><MdOutlineCreditScore className='text-xl font-bold' /> Payment History</NavLink></li>
+                        </ul>
+                }
 
-                <ul className='mt-16 uppercase'>
-                    <li><NavLink className='flex items-center gap-2 my-4 font-medium' to='/dashboard/organizer-profile'> <img className='w-5' src={profile} alt="" />Organizer Profile</NavLink></li>
-                    <li><NavLink className='flex items-center gap-2 my-4 font-medium' to='/dashboard/add-camp'><FaPlusCircle className='text-xl font-bold' />Add Camp</NavLink></li>
-                    <li><NavLink className='flex items-center gap-2 my-4 font-medium' to='/dashboard/manage-camps'><FaCreditCard className='text-xl font-bold' /> Manage Camps</NavLink></li>
-                    <li><NavLink className='flex items-center gap-2 my-4 font-medium' to='/dashboard/manage-registered-camps'><MdOutlineCreditScore className='text-xl font-bold' /> Manage Registered Camps</NavLink></li>
-                </ul>
-
-                {/* common user */}
+                {/* common */}
                 <div className="divider"></div>
                 <ul className='uppercase'>
                     <li><NavLink className='flex items-center gap-2 my-4 font-medium' to='/'> <FaHome className='text-xl font-bold' />Home</NavLink></li>

@@ -19,7 +19,7 @@ const FeedbackList = ({ feedback }) => {
                         <div>
                             <h3 className="font-semibold">{feedback.participantName}</h3>
                             <p className="text-sm text-gray-500">{feedback.date}</p>
-                            <p className="mt-2">{feedback.feedback}</p>
+                            <p className="mt-2">{feedback.feedback.slice(0, 20)}...</p>
                             <div className="mt-2">
                                 <span className="text-yellow-500">
                                     {"⭐".repeat(feedback.rating)}

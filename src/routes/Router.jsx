@@ -13,6 +13,7 @@ import AddCamp from "../pages/Dashboard/AddCamp";
 import ManageCamps from "../pages/Dashboard/ManageCamps";
 import ManageRegisteredCamps from "../pages/Dashboard/ManageRegisteredCamps";
 import CampUpdate from "../pages/Dashboard/CampUpdate";
+import PrivetRoute from "./PrivetRoute";
 
 
 
@@ -44,35 +45,62 @@ const router = createBrowserRouter([
 
     // Dashboard layout 
     {
-        path: "/dashboard",
-        element: <ProtectDashboard>
+        path: "dashboard",
+        element: <PrivetRoute>
             <DashboardLayoutAccount />
-        </ProtectDashboard>,
-        // element: <DashboardLayoutAccount />,
+        </PrivetRoute>,
         children: [
-            {
-                path: "",
-                element: <Navigate to="organizer-profile" />
-            },
+            // Organizer 
+
             {
                 path: "organizer-profile",
-                element: <OrganizerProfile />
+                element: <ProtectDashboard>
+                    <OrganizerProfile />
+                </ProtectDashboard>
+
             },
             {
                 path: "add-camp",
-                element: <AddCamp />
+                element: <ProtectDashboard>
+                    <AddCamp />
+                </ProtectDashboard>
             },
             {
                 path: "manage-camps",
-                element: <ManageCamps />
+                element: <ProtectDashboard>
+                    <ManageCamps />
+                </ProtectDashboard>
             },
             {
                 path: "update-camp/:campId",
-                element: <CampUpdate />
+                element: <ProtectDashboard>
+                    <CampUpdate />
+                </ProtectDashboard>
             },
             {
                 path: "manage-registered-camps",
-                element: <ManageRegisteredCamps />
+                element: <ProtectDashboard>
+                    <ManageRegisteredCamps />
+                </ProtectDashboard>
+            },
+
+            // normal Participant
+
+            {
+                path: "participant-profile",
+                element: "Participant Profile"
+            },
+            {
+                path: "analytics",
+                element: "Analytics"
+            },
+            {
+                path: "registered-camps",
+                element: "Registered Camps"
+            },
+            {
+                path: "payment-history",
+                element: "Payment History"
             },
         ],
 

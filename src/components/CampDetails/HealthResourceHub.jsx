@@ -17,7 +17,7 @@ const HealthResourceHub = () => {
 
     if (isLoading) return <LoadingSpinner />
 
-    console.log(resources);
+    // console.log(resources);
 
     return (
         <div className='my-20'>

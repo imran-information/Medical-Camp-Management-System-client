@@ -6,7 +6,7 @@ import useAxiosSecure from '../../hooks/useAxiosSecure';
 import LoadingSpinner from '../../components/Shared/LoadingSpinner';
 import ParticipantRegistration from '../../components/Modal/ParticipantRegistration';
 import Feedback from '../../components/CampDetails/Feedbacks';
-import HealthResourceHub from '../../components/CampDetails/HealthResourceHub';
+
 
 const CampDetails = () => {
     const { campId } = useParams();
@@ -72,8 +72,7 @@ const CampDetails = () => {
             {/* camp feedbacks  */}
             <Feedback />
 
-            {/* Health Resource Hub */}
-            <HealthResourceHub />
+            
         </div>
     );
 };

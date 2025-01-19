@@ -16,9 +16,12 @@ import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { Button } from '@mui/material';
+import useOrganizer from '../../../hooks/useOrganizer';
 
 const Navbar = () => {
   const { user, logOut } = useAuth()
+  const [isOrganizer, isLoading] = useOrganizer();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -92,9 +95,17 @@ const Navbar = () => {
             </Link>
           ) : <React.Fragment>
             <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-              <Link to='/dashboard'>
-                <Button variant="contained">Dashboard</Button>
-              </Link>
+              {
+                user && isOrganizer && <Link to='/dashboard/organizer-profile'>
+                  <Button variant="contained">Dashboard</Button>
+                </Link>
+              }
+
+              {
+                user && !isOrganizer && <Link to='/dashboard/participant-profile'>
+                  <Button variant="contained">Dashboard</Button>
+                </Link>
+              }
               <Tooltip title={`${user.displayName} Account settings`}>
                 <IconButton
                   onClick={handleClick}
