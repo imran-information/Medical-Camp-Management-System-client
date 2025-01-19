@@ -17,12 +17,12 @@ const CampForm = () => {
         const campData = {
             name: data.campName,
             image: image,
-            fees: data.fees,
+            fees: parseFloat(data.fees),
             date: data.dateTime,
             time: data.dateTime,
             location: data.location,
             healthcareProfessional: data.professionalName,
-            participantCount: data.participantCount,
+            participantCount: parseInt(data.participantCount),
             description: data.description,
 
         }
