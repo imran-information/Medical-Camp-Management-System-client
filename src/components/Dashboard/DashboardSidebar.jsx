@@ -9,6 +9,7 @@ import profile from '../../assets/images/doctor.png'
 import '../../components/Dashboard/DashboardSidebar.css'
 import useOrganizer from '../../hooks/useOrganizer';
 import LoadingSpinner from '../Shared/LoadingSpinner';
+import { IoMdAnalytics } from "react-icons/io";
 
 const Dashboard = () => {
     const [isOrganizer, isLoading] = useOrganizer();
@@ -33,7 +34,7 @@ const Dashboard = () => {
                         </ul>
                         : <ul className='mt-16 uppercase'>
                             <li><NavLink className='flex items-center gap-2 my-4 font-medium' to='/dashboard/participant-profile'> <img className='w-5' src={profile} alt="" />Participant Profile</NavLink></li>
-                            <li><NavLink className='flex items-center gap-2 my-4 font-medium' to='/dashboard/analytics'><FaPlusCircle className='text-xl font-bold' />Analytics</NavLink></li>
+                            <li><NavLink className='flex items-center gap-2 my-4 font-medium' to='/dashboard/analytics'><IoMdAnalytics className='text-xl font-bold' />Analytics</NavLink></li>
                             <li><NavLink className='flex items-center gap-2 my-4 font-medium' to='/dashboard/registered-camps'><FaCreditCard className='text-xl font-bold' />Registered Camps</NavLink></li>
                             <li><NavLink className='flex items-center gap-2 my-4 font-medium' to='/dashboard/payment-history'><MdOutlineCreditScore className='text-xl font-bold' /> Payment History</NavLink></li>
                         </ul>
@@ -42,7 +43,7 @@ const Dashboard = () => {
                 {/* common */}
                 <div className="divider"></div>
                 <ul className='uppercase'>
-                    <li><NavLink className='flex items-center gap-2 my-4 font-medium' to='/'> <FaHome className='text-xl font-bold' />Home</NavLink></li>
+                    <li><NavLink className='flex items-center gap-2 my-4 font-medium' to='/'><FaHome className='text-xl font-bold' />Home</NavLink></li>
                     <li><NavLink className='flex items-center gap-2 my-4 font-medium' to='/available-camps'><FaIdCard className='text-xl font-bold' /> Available camps</NavLink></li>
                     <li><NavLink className='flex items-center gap-2 my-4 font-medium' to='/contacts'> <IoCallSharp className='text-xl font-bold' />Contact us</NavLink></li>
                 </ul>

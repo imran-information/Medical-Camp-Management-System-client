@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router-dom'
+import { Link, Navigate, NavLink, useNavigate } from 'react-router-dom'
 import avatarImg from '../../../assets/images/placeholder.jpg'
 import logo from '../../../assets/images/logo.png'
 import useAuth from '../../../hooks/useAuth'
@@ -17,12 +17,14 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { Button } from '@mui/material';
 import useOrganizer from '../../../hooks/useOrganizer';
+import Swal from 'sweetalert2';
+import LoadingSpinner from '../LoadingSpinner';
 
 const Navbar = () => {
   const { user, logOut } = useAuth()
   const [isOrganizer, isLoading] = useOrganizer();
-
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const navigate = useNavigate();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -33,9 +35,23 @@ const Navbar = () => {
 
   };
 
-  const handleLogOut = () => {
-    logOut()
+  const handleLogOut = async () => {
+    await logOut()
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "logged out successfully",
+      showConfirmButton: false,
+      timer: 1500
+    });
+    handleClose()
   }
+
+  const handleAnotherAccount = async () => {
+    navigate('/login')
+    await logOut()
+  }
+  if (isLoading) return <LoadingSpinner />
 
   const links = <>
     <li><NavLink to='/'>Home</NavLink></li>
@@ -158,14 +174,19 @@ const Navbar = () => {
               transformOrigin={{ horizontal: 'right', vertical: 'top' }}
               anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-              <MenuItem onClick={handleClose}>
-                <Avatar /> Profile
-              </MenuItem>
-              <MenuItem onClick={handleClose}>
-                <Avatar /> My account
-              </MenuItem>
+              <Link to={isOrganizer ? '/dashboard/organizer-profile' : '/dashboard/participant-profile'}>
+                <MenuItem onClick={handleClose}>
+                  <Avatar /> Profile
+                </MenuItem>
+              </Link>
+              <Link to={isOrganizer ? '/dashboard/organizer-profile' : '/dashboard/participant-profile'}>
+                <MenuItem onClick={handleClose}>
+                  <Avatar /> My account
+                </MenuItem>
+              </Link>
+
               <Divider />
-              <MenuItem onClick={handleClose}>
+              <MenuItem onClick={() => { handleClose(), handleAnotherAccount() }}>
                 <ListItemIcon>
                   <PersonAdd fontSize="small" />
                 </ListItemIcon>
@@ -177,7 +198,7 @@ const Navbar = () => {
                 </ListItemIcon>
                 Settings
               </MenuItem>
-              <MenuItem onClick={() => { handleClose(); handleLogOut(); }}>
+              <MenuItem onClick={() => { handleClose(), handleLogOut(); }}>
                 <ListItemIcon>
                   <Logout fontSize="small" />
                 </ListItemIcon>
