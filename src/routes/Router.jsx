@@ -17,6 +17,7 @@ import PrivetRoute from "./PrivetRoute";
 import ParticipantProfile from "../pages/Dashboard/Participant/ParticipantProfile";
 import Analytics from "../pages/Dashboard/Participant/Analytics";
 import RegisteredCamps from "../pages/Dashboard/Participant/RegisteredCamps";
+import PaymentHistory from "../pages/Dashboard/Participant/PaymentHistory";
 
 
 
@@ -103,7 +104,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "payment-history",
-                element: "Payment History"
+                element: <PaymentHistory />
             },
         ],
 

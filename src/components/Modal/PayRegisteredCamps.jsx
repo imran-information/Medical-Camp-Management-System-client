@@ -4,11 +4,11 @@ import { loadStripe } from '@stripe/stripe-js';
 import CheckoutForm from '../Dashboard/Participant/CheckoutForm/CheckoutForm';
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
-const PayRegisteredCamps = ({ isPaying, setIsPaying, camp }) => { 
+const PayRegisteredCamps = ({ isPaying, setIsPaying, camp, refetch }) => {
     const handleClose = () => {
         setIsPaying(false);
     }
- 
+
     return (
         <>
             <Dialog open={isPaying} onClose={() => handleClose()} fullWidth maxWidth="sm">
@@ -28,7 +28,7 @@ const PayRegisteredCamps = ({ isPaying, setIsPaying, camp }) => {
 
                     <Elements stripe={stripePromise}>
                         {/* <CheckoutForm /> */}
-                        <CheckoutForm handleClose={handleClose} camp={camp} />
+                        <CheckoutForm handleClose={handleClose} camp={camp} refetch={refetch} />
                     </Elements>
                 </DialogContent>
                 {/* <DialogActions>

@@ -1,4 +1,3 @@
-import React from 'react';
 import Heading from '../../../components/Shared/Heading';
 import RegisteredCampsTable from '../../../components/Dashboard/Participant/RegisteredCamps/RegisteredCampsTable';
 import useRegisteredCamps from '../../../hooks/useRegisteredCamps';

@@ -2,51 +2,42 @@ import React, { useState } from "react";
 import { Button } from "@mui/material";
 import { FaTrashAlt, FaStar } from "react-icons/fa";
 import PayRegisteredCamps from "../../../Modal/PayRegisteredCamps";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const RegisteredCampsTable = ({ registeredCamps = [], refetch }) => {
     const [isPaying, setIsPaying] = useState(false);
     const [payCamp, setPayCamp] = useState({});
-    // // Sample data
-    // const [camps, setCamps] = useState([
-    //     {
-    //         id: 1,
-    //         name: "Camp A",
-    //         fees: "$200",
-    //         participant: "John Doe",
-    //         paymentStatus: "Paid",
-    //         confirmationStatus: "Confirmed",
-    //     },
-    //     {
-    //         id: 2,
-    //         name: "Camp B",
-    //         fees: "$150",
-    //         participant: "Jane Smith",
-    //         paymentStatus: "Pay",
-    //         confirmationStatus: "Pending",
-    //     },
-    //     {
-    //         id: 3,
-    //         name: "Camp C",
-    //         fees: "$300",
-    //         participant: "Alice Johnson",
-    //         paymentStatus: "Paid",
-    //         confirmationStatus: "Confirmed",
-    //     },
-    // ]);
-
-    // const handlePay = (id) => {
-    //     // alert(`Redirecting to payment for camp ID: ${id}`);
-    //     // // Mock payment logic
-    //     // setCamps((prevCamps) =>
-    //     //     prevCamps.map((camp) =>
-    //     //         camp.id === id ? { ...camp, paymentStatus: "Paid" } : camp
-    //     //     )
-    //     // );
-    // };
-
+    const axiosSecure = useAxiosSecure()
     const handleCancel = (id) => {
-        // alert(`Cancelling registration for camp ID: ${id}`);
-        // setCamps((prevCamps) => prevCamps.filter((camp) => camp.id !== id));
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const { data } = await axiosSecure.delete(`/registered-camp-delete/${id}`)
+                if (data?.deletedCount) {
+                    refetch()
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your Registered Camp has been deleted.",
+                        icon: "success"
+                    });
+                    const { data } = await axiosSecure.patch(`/camps/participant/${id}`, { status: "decrease" })
+                    if (data?.modifiedCount) {
+                        console.log("Updated");
+                    }
+                }
+
+            }
+        });
+
+
     };
 
     const handleFeedback = (id) => {
@@ -84,23 +75,25 @@ const RegisteredCampsTable = ({ registeredCamps = [], refetch }) => {
                                         Pay
                                     </Button>
                                 ) : (
-                                    <span className="text-green-500">Paid</span>
+                                    (camp.confirmationStatus === 'Processing' ? <span className="text-primary">Paid</span> : <span className="text-green">Paid</span>)
                                 )}
                             </td>
                             <td className="border px-4 py-2">
-                                {camp.confirmationStatus === "Pending" ? (
-                                    <span className="text-yellow-500">Pending</span>
+                                {camp.confirmationStatus === "Processing" ? (
+                                    <span className="text-primary">Processing</span>
                                 ) : (
-                                    <span className="text-green-500">Confirmed</span>
+                                    (camp.confirmationStatus === "Confirmed" ? '' : <span className="text-yellow">Pending</span>)
                                 )}
+                                {camp.confirmationStatus === "Confirmed" && <span className="text-green">Confirmed</span>}
                             </td>
+
                             <td className="border px-4 py-2">
                                 <Button
                                     variant="outlined"
                                     color="secondary"
-                                    disabled={camp.paymentStatus === "Paid"}
+                                    disabled={camp.confirmationStatus === "Confirmed"}
                                     startIcon={<FaTrashAlt />}
-                                    onClick={() => handleCancel(camp.id)}
+                                    onClick={() => handleCancel(camp.campId)}
                                 >
                                     Cancel
                                 </Button>
@@ -124,7 +117,7 @@ const RegisteredCampsTable = ({ registeredCamps = [], refetch }) => {
                     ))}
                 </tbody>
             </table>
-            <PayRegisteredCamps isPaying={isPaying} setIsPaying={setIsPaying} camp={payCamp} />
+            <PayRegisteredCamps isPaying={isPaying} setIsPaying={setIsPaying} camp={payCamp} refetch={refetch} />
         </div>
     );
 };

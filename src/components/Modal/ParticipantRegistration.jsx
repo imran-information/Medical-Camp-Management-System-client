@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import useAuth from '../../hooks/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 // React Modal Styling
 Modal.setAppElement("#root");
@@ -11,6 +12,7 @@ Modal.setAppElement("#root");
 const ParticipantRegistration = ({ isModalOpen, closeModal, refetch, camp }) => {
     const { user } = useAuth()
     const axiosSecure = useAxiosSecure()
+    const navigate = useNavigate()
     const { name, fees, location, healthcareProfessional, _id } = camp || {}
 
     const [formData, setFormData] = useState({
@@ -50,15 +52,26 @@ const ParticipantRegistration = ({ isModalOpen, closeModal, refetch, camp }) => 
                         showConfirmButton: false,
                         timer: 1500
                     });
+                    navigate('/dashboard/registered-camps')
                 }
 
             }
         } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Something went wrong!",
-            });
+            if (error.response.data.message) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: error?.response?.data?.message,
+                });
+
+            }
+            else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                });
+            }
         }
 
     };

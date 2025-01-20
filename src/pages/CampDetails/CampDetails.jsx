@@ -6,12 +6,17 @@ import useAxiosSecure from '../../hooks/useAxiosSecure';
 import LoadingSpinner from '../../components/Shared/LoadingSpinner';
 import ParticipantRegistration from '../../components/Modal/ParticipantRegistration';
 import Feedback from '../../components/CampDetails/Feedbacks';
+import useOrganizer from '../../hooks/useOrganizer';
+import useAuth from '../../hooks/useAuth';
 
 
 const CampDetails = () => {
     const { campId } = useParams();
     const axiosSecure = useAxiosSecure()
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [organizer] = useOrganizer()
+    const { user } = useAuth()
+
     const { isLoading, error, data: camp = {}, refetch } = useQuery({
         queryKey: ['camp', campId],
         queryFn: async () => {
@@ -59,7 +64,7 @@ const CampDetails = () => {
                         <Typography variant="body1" mt={3}>
                             <strong>Description:</strong> {camp.description}
                         </Typography>
-                        <Button onClick={() => setIsModalOpen(true)} variant="contained" color="primary" sx={{ mt: 3 }}>
+                        <Button disabled={organizer || !user} onClick={() => setIsModalOpen(true)} variant="contained" color="primary" sx={{ mt: 3 }}>
                             Join Camp
                         </Button>
 
@@ -72,7 +77,7 @@ const CampDetails = () => {
             {/* camp feedbacks  */}
             <Feedback />
 
-            
+
         </div>
     );
 };

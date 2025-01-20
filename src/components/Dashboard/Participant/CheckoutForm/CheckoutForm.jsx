@@ -6,11 +6,13 @@ import { Button, DialogActions } from '@mui/material';
 import { useEffect, useState } from 'react';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
-const CheckoutForm = ({ handleClose, camp }) => {
+const CheckoutForm = ({ handleClose, camp, refetch }) => {
     const stripe = useStripe();
     const elements = useElements();
     const axiosSecure = useAxiosSecure()
+    const navigate = useNavigate()
     const [clientSecret, setClientSecret] = useState('')
     const [pending, setPending] = useState(false)
 
@@ -73,14 +75,23 @@ const CheckoutForm = ({ handleClose, camp }) => {
                 },
             },
         })
-        if (paymentIntent.status === 'succeeded') {
-            Swal.fire({
-                title: "Payment Succeeded",
-                icon: "success",
-                draggable: true
-            });
-            console.log(data);
-            setPending(false)
+        if (paymentIntent?.status === 'succeeded') {
+            console.log(paymentIntent);
+            const { data } = await axiosSecure.patch(`/registered-camp-status`, { campId: camp?.campId })
+            if (data?.modifiedCount > 0) {
+                handleClose()
+                Swal.fire({
+                    title: "Payment Succeeded",
+                    text: `Payment transaction ID: ${paymentIntent?.id}`,
+                    icon: "success",
+                    draggable: true
+                });
+                setPending(false)
+                refetch()
+                navigate("/dashboard/payment-history")
+            }
+
+
         }
     };
 
