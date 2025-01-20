@@ -4,11 +4,17 @@ import { FaTrashAlt, FaStar } from "react-icons/fa";
 import PayRegisteredCamps from "../../../Modal/PayRegisteredCamps";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import Feedback from "../../../Modal/Feedback";
+
 
 const RegisteredCampsTable = ({ registeredCamps = [], refetch }) => {
     const [isPaying, setIsPaying] = useState(false);
+    const [open, setOpen] = useState(false);
     const [payCamp, setPayCamp] = useState({});
+    const [campId, setCampId] = useState(null)
     const axiosSecure = useAxiosSecure()
+
+
     const handleCancel = (id) => {
         Swal.fire({
             title: "Are you sure?",
@@ -41,8 +47,9 @@ const RegisteredCampsTable = ({ registeredCamps = [], refetch }) => {
     };
 
     const handleFeedback = (id) => {
-        // alert(`Redirecting to feedback for camp ID: ${id}`);
-        // Feedback logic can be implemented here
+        setCampId(id)
+        setOpen(true)
+        console.log(id);
     };
 
     return (
@@ -105,7 +112,7 @@ const RegisteredCampsTable = ({ registeredCamps = [], refetch }) => {
                                         variant="contained"
                                         color="success"
                                         startIcon={<FaStar />}
-                                        onClick={() => handleFeedback(camp.id)}
+                                        onClick={() => handleFeedback(camp.campId)}
                                     >
                                         Feedback
                                     </Button>
@@ -118,6 +125,7 @@ const RegisteredCampsTable = ({ registeredCamps = [], refetch }) => {
                 </tbody>
             </table>
             <PayRegisteredCamps isPaying={isPaying} setIsPaying={setIsPaying} camp={payCamp} refetch={refetch} />
+            <Feedback open={open} setOpen={setOpen} campId={campId} />
         </div>
     );
 };

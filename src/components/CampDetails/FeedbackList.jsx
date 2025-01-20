@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 
 const FeedbackList = ({ feedback }) => {
+    // console.log(feedback);
     return (
         <div className="p-6 bg-gray-50 rounded-lg">
             {feedback.length === 0 ? (
-                <p>No feedback available for this camp.</p>
+                <p className="text-2xl text-black">No feedback available for this camp.</p>
             ) : (
                 <div className="space-y-4">
                     <div
