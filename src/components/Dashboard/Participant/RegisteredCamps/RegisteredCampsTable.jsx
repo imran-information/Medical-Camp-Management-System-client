@@ -110,7 +110,7 @@ const RegisteredCampsTable = ({ registeredCamps = [], refetch }) => {
                                     camp.confirmationStatus === "Confirmed" ? (
                                     <Button
                                         variant="contained"
-                                        color="success"
+                                        color="primary"
                                         startIcon={<FaStar />}
                                         onClick={() => handleFeedback(camp.campId)}
                                     >

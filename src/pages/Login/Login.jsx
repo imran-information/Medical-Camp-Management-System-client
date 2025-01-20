@@ -1,217 +1,175 @@
-// import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
+import useAuth from "../../hooks/useAuth";
+import BtnSpinner from "../../components/Shared/BtnSpinner";
+import Swal from "sweetalert2";
 
-// import { FcGoogle } from 'react-icons/fc'
-// import useAuth from '../../hooks/useAuth'
-// import { TbFidgetSpinner } from 'react-icons/tb'
-// import LoadingSpinner from '../../components/Shared/LoadingSpinner'
-// import * as React from 'react';
-// import { AppProvider } from '@toolpad/core/AppProvider';
-// import { SignInPage } from '@toolpad/core/SignInPage';
-// import { useTheme } from '@mui/material/styles';
-
-// const { signInWithGoogle, loading, user } = useAuth()
-// const navigate = useNavigate()
-// const location = useLocation()
-// const from = location?.state?.from?.pathname || '/'
-// // if (loading) return <LoadingSpinner />
-// // if (user) return <Navigate to={from} replace={true} />
-
-
-// const handleSubmit = async event => {
-//     const { signIn } = useAuth()
-//     event.preventDefault()
-//     const form = event.target
-//     const email = form.email.value
-//     const password = form.password.value
-
-//     try {
-//         await signIn(email, password)
-//         navigate(from, { replace: true })
-
-//     } catch (err) {
-//         console.log(err)
-
-//     }
-// }
-// //     // Handle Google Signin
-// const handleGoogleSignIn = async () => {
-//     try {
-//         //User Registration using google
-//         await signInWithGoogle()
-//         navigate(from, { replace: true })
-
-//     } catch (err) {
-//         console.log(err)
-
-//     }
-// }
-
-// // preview-start
-// const providers = [{ id: 'credentials', name: 'Email and Password' }, { id: 'google', name: 'Google' },];
-// // preview-end
-
-// const signIn = async (provider, formData) => {
-//     const promise = new Promise((resolve) => {
-//         if (provider.id === "google") {
-//             handleGoogleSignIn()
-//             console.log(`Sign in with ${provider.id}`);
-//         }
-
-
-//         setTimeout(() => {
-//             alert(
-//                 `Signing in with "${provider.name}" and credentials: ${formData.get('email')}, ${formData.get('password')}`,
-//             );
-//             resolve();
-//         }, 300);
-//     });
-//     return promise;
-// };
-
-// const Login = () => {
-//     const theme = useTheme();
-//     return (
-//         // preview-start
-//         <AppProvider theme={theme}>
-//             <SignInPage
-//                 signIn={signIn}
-//                 providers={providers}
-//                 slotProps={{ emailField: { autoFocus: false } }}
-//             />
-//         </AppProvider>
-//         // preview-end
-//     );
-// };
-
-// export default Login;
-
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
-import { FcGoogle } from 'react-icons/fc'
-import useAuth from '../../hooks/useAuth'
-import { TbFidgetSpinner } from 'react-icons/tb'
-import LoadingSpinner from '../../components/Shared/LoadingSpinner'
-import { GiDna2 } from "react-icons/gi";
 
 const Login = () => {
-    const { signIn, signInWithGoogle, loading, user } = useAuth()
-    const navigate = useNavigate()
-    const location = useLocation()
-    const from = location?.state?.from?.pathname || '/'
-    if (loading) return <LoadingSpinner />
-    if (user) return <Navigate to={from} replace={true} />
-    // form submit handler
-    const handleSubmit = async event => {
-        event.preventDefault()
-        const form = event.target
-        const email = form.email.value
-        const password = form.password.value
+    const { signIn, signInWithGoogle, user } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location?.state?.from?.pathname || "/";
+    const [loading, setLoading] = useState(false)
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
 
+
+    if (user) return <Navigate to={from} replace={true} />;
+
+    // Handle form submission
+    const onSubmit = async (data) => {
+        const { email, password } = data;
+        setLoading(true)
         try {
-            //User Login
-            await signIn(email, password)
-
-            navigate(from, { replace: true })
+            await signIn(email, password);
+            navigate(from, { replace: true });
+            Swal.fire({
+                position: "top-center",
+                icon: "success",
+                title: "Login Successfully",
+                showConfirmButton: false,
+                timer: 1500
+            });
+            setLoading(false)
         } catch (err) {
-            console.log(err)
-        }
-    }
+            setLoading(false)
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: err,
 
-    // Handle Google Signin
+            });
+        }
+    };
+
+    // Handle Google Sign-in
     const handleGoogleSignIn = async () => {
+        setLoading(true)
         try {
-            //User Registration using google
-            await signInWithGoogle()
-            navigate(from, { replace: true })
+            await signInWithGoogle();
+            navigate(from, { replace: true });
+            Swal.fire({
+                position: "top-center",
+                icon: "success",
+                title: "Login Successfully",
+                showConfirmButton: false,
+                timer: 1500
+            });
         } catch (err) {
-            console.log(err)
+            setLoading(false)
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: err,
+
+            });
         }
-    }
+    };
+
     return (
-        <div className='flex justify-center items-center min-h-screen bg-white'>
-            <div className='flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900'>
-                <div className='mb-8 text-center'>
-                    <h1 className='my-3 text-4xl font-bold'>Log In</h1>
-                    <p className='text-sm text-gray-400'>
-                        Sign in to access your account
-                    </p>
+        <div className="flex justify-center items-center min-h-screen bg-white">
+            <div className="flex flex-col max-w-lg p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900">
+                <div className="mb-8 text-center">
+                    <h1 className="my-3 text-4xl font-bold">Sign In</h1>
+                    <p className="text-sm text-gray-400">Sign in to access your account</p>
                 </div>
+
                 <form
-                    onSubmit={handleSubmit}
-                    noValidate=''
-                    action=''
-                    className='space-y-6 ng-untouched ng-pristine ng-valid'
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="space-y-6 ng-untouched ng-pristine ng-valid"
                 >
-                    <div className='space-y-4'>
+                    <div className="space-y-4">
                         <div>
-                            <label htmlFor='email' className='block mb-2 text-sm'>
+                            <label htmlFor="email" className="block mb-2 text-sm">
                                 Email address
                             </label>
                             <input
-                                type='email'
-                                name='email'
-                                id='email'
-                                required
-                                placeholder='Enter Your Email Here'
-                                className='w-full px-3 py-2 border rounded-md border-primary focus:outline-blue-900 bg-gray-200 text-gray-900'
-                                data-temp-mail-org='0'
+                                type="email"
+                                id="email"
+                                {...register("email", { required: "Email is required" })}
+                                placeholder="Enter Your Email Here"
+                                className="w-full px-3 py-2 border rounded-md border-primary focus:outline-blue-900 bg-gray-200 text-gray-900"
                             />
+                            {errors.email && (
+                                <p className="text-red text-xs mt-1">
+                                    {errors.email.message}
+                                </p>
+                            )}
                         </div>
+
                         <div>
-                            <div className='flex justify-between'>
-                                <label htmlFor='password' className='text-sm mb-2'>
-                                    Password
-                                </label>
-                            </div>
+                            <label htmlFor="password" className="block mb-2 text-sm">
+                                Password
+                            </label>
                             <input
-                                type='password'
-                                name='password'
-                                autoComplete='current-password'
-                                id='password'
-                                required
-                                placeholder='*******'
-                                className='w-full px-3 py-2 border rounded-md border-primary focus:outline-blue-900 bg-gray-200 text-gray-900'
+                                type="password"
+                                id="password"
+                                {...register("password", {
+                                    required: "Password is required",
+                                    pattern: {
+                                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/,
+                                        message:
+                                            "Password must contain at least one uppercase letter, one lowercase letter, one number, and be at least 6 characters long.",
+                                    },
+                                })}
+                                placeholder="*******"
+                                className="w-full px-3 py-2 border rounded-md border-primary focus:outline-blue-900 bg-gray-200 text-gray-900"
                             />
+                            {errors.password && (
+                                <p className="text-red text-xs mt-1">
+                                    {errors.password.message}
+                                </p>
+                            )}
                         </div>
                     </div>
 
                     <div>
                         <button
-                            type='submit'
-                            className='bg-primary w-full rounded-md py-3 text-white'
+                            type="submit"
+                            className="bg-primary w-full rounded-md py-3 text-white"
                         >
                             {loading ? (
-                                <GiDna2 className='animate-spin m-auto text-white' />
+                                <BtnSpinner />
                             ) : (
-                                'Continue'
+                                "Sign in"
                             )}
                         </button>
                     </div>
                 </form>
-                <div className='space-y-1'>
-                    <button className='text-xs hover:underline hover:text-primary text-gray-400'>
+
+                <div className="space-y-1">
+                    <button className="text-xs hover:underline hover:text-primary text-gray-400">
                         Forgot password?
                     </button>
                 </div>
-                <div className='flex items-center pt-4 space-x-1'>
-                    <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
-                    <p className='px-3 text-sm dark:text-gray-400'>
+
+                <div className="flex items-center pt-4 space-x-1">
+                    <div className="flex-1 h-px sm:w-16 bg-gray-300"></div>
+                    <p className="px-3 text-sm text-gray-400">
                         Login with social accounts
                     </p>
-                    <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
+                    <div className="flex-1 h-px sm:w-16 bg-gray-300"></div>
                 </div>
+
                 <div
                     onClick={handleGoogleSignIn}
-                    className='flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer'
+                    className="flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 rounded cursor-pointer"
                 >
                     <FcGoogle size={32} />
-
                     <p>Continue with Google</p>
                 </div>
-                <p className='px-6 text-sm text-center text-gray-400'>
-                    Don&apos;t have an account yet?{' '}
+
+                <p className="px-6 text-sm text-center text-gray-400">
+                    Don&apos;t have an account yet?{" "}
                     <Link
-                        to='/signup'
-                        className='hover:underline hover:text-primary text-primary'
+                        to="/signup"
+                        className="hover:underline hover:text-primary text-primary"
                     >
                         Sign up
                     </Link>
@@ -219,7 +177,7 @@ const Login = () => {
                 </p>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Login
+export default Login;

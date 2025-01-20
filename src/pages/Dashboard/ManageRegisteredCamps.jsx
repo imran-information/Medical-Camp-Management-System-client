@@ -7,12 +7,12 @@ import Swal from 'sweetalert2';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query'
 import LoadingSpinner from '../../components/Shared/LoadingSpinner';
+import Heading from '../../components/Shared/Heading';
 
 
 const ManageRegisteredCamps = () => {
     const axiosSecure = useAxiosSecure();
-
-    const { isLoading, error, data: registeredCamps = [] } = useQuery({
+    const { isLoading, error, data: registeredCamps = [], refetch } = useQuery({
         queryKey: ['registered-camps'],
         queryFn: async () => {
             try {
@@ -24,24 +24,46 @@ const ManageRegisteredCamps = () => {
         }
     })
 
-    if (isLoading) return <LoadingSpinner />
     console.log(registeredCamps);
+    if (isLoading) return <LoadingSpinner />
 
-    const handleConfirm = async (campId) => {
-        try {
-            const { data } = await axiosSecure.patch(`/registered-camps/${campId}`, { confirmationStatus: 'Confirmed' });
-            if (data.modifiedCount) {
-                Swal.fire('Success', 'Confirmation status updated!', 'success');
+
+    const handleConfirm = async (campId, participantEmail) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Do you really want to confirm the register camp..?",
+            icon: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, confirm it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const { data } = await axiosSecure.patch(`/registered-camp-status-organizer`, {
+                        campId: campId,
+                        confirmationStatus: 'Confirmed',
+                        participantEmail: participantEmail
+                    });
+
+                    if (data.modifiedCount) {
+                        refetch()
+                        Swal.fire({
+                            title: "Confirmed.",
+                            text: "Your Register Camp Confirmed successfully.",
+                            icon: "success"
+                        });
+                    }
+                } catch (error) {
+                    Swal.fire('Error', 'Could not confirmation.', 'error');
+                }
+
             }
-        } catch (error) {
-            Swal.fire('Error', 'Could not update confirmation status.', 'error');
-        }
+        });
+
     };
 
-    const handleCancel = async (campId) => {
-        const camp = registeredCamps.find((c) => c._id === campId);
-        if (camp.paymentStatus === 'Paid' && camp.confirmationStatus === 'Confirmed') return;
-
+    const handleCancel = async (_id, id) => {
         const result = await Swal.fire({
             title: 'Are you sure?',
             text: 'This will cancel the registration!',
@@ -52,10 +74,22 @@ const ManageRegisteredCamps = () => {
 
         if (result.isConfirmed) {
             try {
-                const { data } = await axiosSecure.delete(`/registered-camps/${campId}`);
-                if (data.deletedCount) {
-
-                    Swal.fire('Cancelled!', 'The registration has been removed.', 'success');
+                const { data } = await axiosSecure.delete(`/registered-camp-delete-organizer/${_id}`)
+                if (data?.deletedCount) {
+                    refetch()
+                    Swal.fire({
+                        title: "Cancelled!",
+                        text: "The camp registration has been removed.",
+                        icon: "success"
+                    });
+                    try {
+                        const { data } = await axiosSecure.patch(`/camps/participant/${id}`, { status: "decrease" })
+                        if (data?.modifiedCount) {
+                            console.log("Updated");
+                        }
+                    } catch (error) {
+                        Swal.fire('Error', 'Could not cancel registration.', 'error');
+                    }
                 }
             } catch (error) {
                 Swal.fire('Error', 'Could not cancel registration.', 'error');
@@ -64,14 +98,15 @@ const ManageRegisteredCamps = () => {
     };
 
     return (
-        <Box sx={{ width: '80%', margin: 'auto', mt: 4 }}>
+        <Box sx={{ width: '100%', margin: 'auto', mt: 4 }}>
             <Typography variant="h4" mb={3} align="center">
-                Manage Registered Camps
+                <Heading center={true} title={"Manage Registered Camps"} subtitle={"Only Paid data Show in table"} />
             </Typography>
             <TableContainer component={Paper}>
                 <Table>
                     <TableHead>
                         <TableRow>
+                            <TableCell>#</TableCell>
                             <TableCell>Camp Name</TableCell>
                             <TableCell>Camp Fees</TableCell>
                             <TableCell>Participant Name</TableCell>
@@ -81,35 +116,36 @@ const ManageRegisteredCamps = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {registeredCamps.map((camp) => (
+                        {registeredCamps.map((camp, index) => (
                             <TableRow key={camp._id}>
+                                <TableCell>{index + 1}</TableCell>
                                 <TableCell>{camp.campData.name}</TableCell>
                                 <TableCell>{camp.campData.fees}</TableCell>
                                 <TableCell>{camp.participantName}</TableCell>
                                 <TableCell>
                                     <Typography
-                                        color={camp.paymentStatus === 'Paid' ? 'green' : 'red'}>
+                                        color={camp.paymentStatus === 'Paid' && camp.confirmationStatus === "Confirmed" ? 'green' : 'primary'}>
                                         {camp.paymentStatus}
                                     </Typography>
                                 </TableCell>
                                 <TableCell>
-                                    {camp.confirmationStatus === 'Pending' ? (
+                                    {camp.confirmationStatus === 'Processing' ? (
                                         <Button
                                             variant="outlined"
                                             color="warning"
-                                            onClick={() => handleConfirm(camp._id)}
+                                            onClick={() => handleConfirm(camp._id, camp.participantEmail)}
                                         >
-                                            Pending
+                                            Confirm
                                         </Button>
                                     ) : (
-                                        <Typography color="green">Confirmed</Typography>
+                                        <Typography color="green">{camp.confirmationStatus}</Typography>
                                     )}
                                 </TableCell>
                                 <TableCell>
                                     <Button
                                         variant="contained"
                                         color="error"
-                                        onClick={() => handleCancel(camp._id)}
+                                        onClick={() => handleCancel(camp._id, camp?.campId)}
                                         disabled={
                                             camp.paymentStatus === 'Paid' &&
                                             camp.confirmationStatus === 'Confirmed'

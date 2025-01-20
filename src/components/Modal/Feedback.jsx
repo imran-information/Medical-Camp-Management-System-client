@@ -45,7 +45,7 @@ const Feedback = ({ campId, open, setOpen, }) => {
         }
         try {
             const { data } = await axiosSecure.post("/feedbacks", feedbackInfo);
-            console.log(data);
+            // console.log(data);
             if (data.insertedId) {
                 Swal.fire({
                     position: "top-center",
