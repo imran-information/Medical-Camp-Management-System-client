@@ -8,15 +8,18 @@ import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query'
 import LoadingSpinner from '../../components/Shared/LoadingSpinner';
 import Heading from '../../components/Shared/Heading';
+import SearchBar from '../../components/Shared/SearchBar/SearchBar';
 
 
 const ManageRegisteredCamps = () => {
     const axiosSecure = useAxiosSecure();
+    const [search, setSearch] = useState('')
+
     const { isLoading, error, data: registeredCamps = [], refetch } = useQuery({
-        queryKey: ['registered-camps'],
+        queryKey: ['registered-camps', search],
         queryFn: async () => {
             try {
-                const { data } = await axiosSecure.get('/registered-camps');
+                const { data } = await axiosSecure.get(`/registered-camps?search=${search}`);
                 return data;
             } catch (error) {
                 console.error('Error fetching registered camps:', error);
@@ -24,8 +27,12 @@ const ManageRegisteredCamps = () => {
         }
     })
 
-    console.log(registeredCamps);
-    if (isLoading) return <LoadingSpinner />
+    // console.log(registeredCamps);
+    const onSearch = (search) => {
+        setSearch(search);
+    }
+
+    // if (isLoading) return <LoadingSpinner />
 
 
     const handleConfirm = async (campId, participantEmail) => {
@@ -100,8 +107,12 @@ const ManageRegisteredCamps = () => {
     return (
         <Box sx={{ width: '100%', margin: 'auto', mt: 4 }}>
             <Typography variant="h4" mb={3} align="center">
-                <Heading center={true} title={"Manage Registered Camps"} subtitle={"Only Paid data Show in table"} />
+                <Heading center={true} title={"Manage Registered Camps"} subtitle={"Only Paid all data Show in table"} />
             </Typography>
+
+            {/* Search Bar */}
+            <small className='ml-10'> Participant Name OR Confirmation Status:</small>
+            <SearchBar onSearch={onSearch} />
             <TableContainer className='m-0 md:m-10' component={Paper}>
                 <Table>
                     <TableHead>

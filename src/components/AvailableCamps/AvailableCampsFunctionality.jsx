@@ -3,16 +3,17 @@ import CampCard from '../Shared/Card/CampCard';
 import { useQuery } from '@tanstack/react-query'
 import LoadingSpinner from '../Shared/LoadingSpinner';
 import axios from 'axios';
+import useAxiosPublic from '../../hooks/usePublic';
 
 const AvailableCampsFunctionality = () => {
     const [searchCamp, setSearchCamp] = useState('');
     const [sortOption, setSortOption] = useState('');
-    const [layout, setLayout] = useState('three'); 
-
+    const [layout, setLayout] = useState('three');
+    const axiosPublic = useAxiosPublic()
     const { isLoading, error, data: allCamps = [] } = useQuery({
         queryKey: ['allCamps', searchCamp, sortOption],
         queryFn: async () => {
-            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/all-camps?search=${searchCamp}&sort=${sortOption}`)
+            const { data } = await axiosPublic.get(`/all-camps?search=${searchCamp}&sort=${sortOption}`)
             return data
         }
     })

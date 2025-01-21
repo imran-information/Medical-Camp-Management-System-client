@@ -1,3 +1,4 @@
+import { Tooltip } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
 const FeedbackList = ({ feedback }) => {
@@ -10,24 +11,32 @@ const FeedbackList = ({ feedback }) => {
                 <div className="space-y-4">
                     <div
                         key={feedback.participantId}
-                        className="bg-white shadow-md rounded-lg p-4 flex items-center gap-4"
+                        className="bg-white shadow-md rounded-lg p-4 gap-4"
                     >
-                        <img
-                            src={feedback.participantImage}
-                            alt={feedback.participantName}
-                            className="w-16 h-16 rounded-full object-cover"
-                        />
+                        <div className=" flex items-center gap-2 ">
+                            <img
+                                src={feedback.participantImage}
+                                alt={feedback.participantName}
+                                className="w-16 h-16 rounded-full object-cover"
+                            />
+                            <div className="">
+                                <h3 className="font-semibold">{feedback.participantName}</h3>
+                                <p className="text-sm text-gray-500">{feedback.date}</p>
+                            </div>
+                        </div>
                         <div>
-                            <h3 className="font-semibold">{feedback.participantName}</h3>
-                            <p className="text-sm text-gray-500">{feedback.date}</p>
-                            <p className="mt-2">{feedback.feedback.slice(0, 20)}...</p>
+                            <Tooltip title={feedback.feedback} arrow placement="top">
+                                <p className="mt-2">
+                                    {feedback.feedback.slice(0, 50)}...
+                                </p>
+                            </Tooltip>
                             <div className="mt-2">
                                 <span className="text-yellow-500">
                                     {"⭐".repeat(feedback.rating)}
                                 </span>
-                                {/* <span className="text-gray-300">
+                                <span className="text-gray-300">
                                     {"⭐".repeat(5 - feedback.rating)}
-                                </span> */}
+                                </span>
                             </div>
                         </div>
                     </div>

@@ -17,19 +17,19 @@ const CampCard = ({ camp }) => {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                transition: 'transform 0.3s, box-shadow 0.3s', // Smooth hover effect
+                transition: 'transform 0.3s, box-shadow 0.3s',
                 '&:hover': {
-                    transform: 'scale(1.05)', // Slightly increase size
-                    boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.2)', // Add shadow
+                    transform: 'scale(1.05)',
+                    boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.2)',
                 },
             }}
         >
             <Link to={`/camp-details/${camp._id}`} style={{ textDecoration: 'none' }}>
                 <CardActionArea>
-                    {/* Fix image height */}
+
                     <CardMedia
                         component="img"
-                        image={camp.image || 'path/to/default/image.jpg'} // Fallback image
+                        image={camp.image}
                         alt={camp.name || 'Camp Image'}
                         sx={{
                             height: 200,
@@ -46,7 +46,7 @@ const CampCard = ({ camp }) => {
                             <strong>Location:</strong> {camp.location}
                         </Typography>
                         <Typography variant="body2" color="text.secondary" mt={2}>
-                            <strong>Healthcare Professional:</strong>{camp.healthcareProfessional}
+                            <strong>Healthcare Professional:</strong> {camp.healthcareProfessional}
                         </Typography>
                         <Typography variant="body2" color="text.secondary" mt={2}>
                             <strong>Fees:</strong> {camp.fees}

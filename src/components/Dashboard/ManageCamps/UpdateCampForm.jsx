@@ -49,12 +49,12 @@ const UpdateCampForm = () => {
             const campData = {
                 name: formData.campName,
                 image: imageUrl,
-                fees: formData.fees,
+                fees: parseFloat(formData.fees),
                 date: formattedDate || date,
                 time: formData.timeRange,
                 location: formData.location,
                 healthcareProfessional: formData.professionalName,
-                participantCount: formData.participantCount,
+                participantCount: parseInt(formData.participantCount),
                 description: formData.description,
             };
 
