@@ -5,6 +5,7 @@ import { FcGoogle } from "react-icons/fc";
 import useAuth from "../../hooks/useAuth";
 import BtnSpinner from "../../components/Shared/BtnSpinner";
 import Swal from "sweetalert2";
+import { saveUserDb } from "../../utility/utility";
 
 
 const Login = () => {
@@ -52,7 +53,8 @@ const Login = () => {
     const handleGoogleSignIn = async () => {
         setLoading(true)
         try {
-            await signInWithGoogle();
+            const data = await signInWithGoogle();
+            await saveUserDb(data?.user)
             navigate(from, { replace: true });
             Swal.fire({
                 position: "top-center",

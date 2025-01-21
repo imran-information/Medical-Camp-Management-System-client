@@ -49,7 +49,7 @@ const AvailableCampsFunctionality = () => {
 
             {/* Camp Cards */}
             <div
-                className={`grid ${layout === 'three' ? 'grid-cols-1 md:grid-cols-4' : 'grid-cols-1 md:grid-cols-3'} gap-6 mx-auto`}  >
+                className={`grid ${layout === 'three' ? 'grid-cols-1 md:grid-cols-3 lg:grid-cols-4 ' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 '} gap-6 mx-auto`}  >
                 {
                     allCamps.map(camp => <CampCard key={camp._id} camp={camp} />)
                 }

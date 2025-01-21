@@ -36,40 +36,51 @@ const CampDetails = () => {
     return (
         <div className="container mx-auto px-6 py-12 min-h-screen">
             <Card sx={{ maxWidth: "full", margin: 'auto' }}>
-                <div className="flex gap-4">
-                    <CardMedia className='flex-1'
-                        component="img"
-                        height="400"
-                        image={camp.image}
-                        alt={camp.name}
-                    />
-                    <CardContent className='flex-1'>
-                        <Typography variant="h4" gutterBottom>
-                            {camp.name}
-                        </Typography>
-                        <Typography variant="h6" color="text.secondary">
-                            <strong>Date:</strong> {camp.date} <br />
-                            <strong>Time:</strong> {camp.time} <br />
-                            <strong>Location:</strong> {camp.location}
-                        </Typography>
-                        <Typography variant="h6" color="text.secondary" mt={2}>
-                            <strong>Healthcare Professional:</strong> {camp.healthcareProfessional}
-                        </Typography>
-                        <Typography variant="h6" color="text.secondary" mt={2}>
-                            <strong>Fees:</strong> {camp.fees}
-                        </Typography>
-                        <Typography variant="h6" color="text.secondary" mt={2}>
-                            <strong>Participants:</strong> {camp.participantCount}
-                        </Typography>
-                        <Typography variant="body1" mt={3}>
-                            <strong>Description:</strong> {camp.description}
-                        </Typography>
-                        <Button disabled={organizer || !user} onClick={() => setIsModalOpen(true)} variant="contained" color="primary" sx={{ mt: 3 }}>
-                            Join Camp
-                        </Button>
-
-                    </CardContent>
+                <div className="lg:flex gap-4">
+                    <div className="flex-1 py-5 pl-5 rounded-md">
+                        <CardMedia
+                            component="img"
+                            height="194"
+                            image={camp.image}
+                            alt={camp.name}
+                            className="w-full h-auto rounded-md"
+                        />
+                    </div>
+                    <div className="flex-1">
+                        <CardContent>
+                            <Typography variant="h4" gutterBottom>
+                                {camp.name}
+                            </Typography>
+                            <Typography variant="h6" color="text.secondary">
+                                <strong>Date:</strong> {camp.date} <br />
+                                <strong>Time:</strong> {camp.time} <br />
+                                <strong>Location:</strong> {camp.location}
+                            </Typography>
+                            <Typography variant="h6" color="text.secondary" mt={2}>
+                                <strong>Healthcare Professional:</strong> {camp.healthcareProfessional}
+                            </Typography>
+                            <Typography variant="h6" color="text.secondary" mt={2}>
+                                <strong>Fees:</strong> {camp.fees}
+                            </Typography>
+                            <Typography variant="h6" color="text.secondary" mt={2}>
+                                <strong>Participants:</strong> {camp.participantCount}
+                            </Typography>
+                            <Typography variant="body1" mt={3}>
+                                <strong>Description:</strong> {camp.description}
+                            </Typography>
+                            <Button
+                                disabled={organizer || !user}
+                                onClick={() => setIsModalOpen(true)}
+                                variant="contained"
+                                color="primary"
+                                sx={{ mt: 3 }}
+                            >
+                                Join Camp
+                            </Button>
+                        </CardContent>
+                    </div>
                 </div>
+
             </Card>
             {/* Modal Camp Participant Registration */}
             <ParticipantRegistration closeModal={closeModal} isModalOpen={isModalOpen} refetch={refetch} camp={camp} />

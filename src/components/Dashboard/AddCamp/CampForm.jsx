@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button, TextField, Typography, Box } from '@mui/material';
 import { uploadImage } from '../../../utility/utility';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const CampForm = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const axiosSecure = useAxiosSecure()
+    const axiosSecure = useAxiosSecure();
+    const [formattedDate, setFormattedDate] = useState('');
+    const navigate = useNavigate()
+
+    const handleDateChange = (e) => {
+        const isoDate = e.target.value;
+        const [year, month, day] = isoDate.split('-');
+        setFormattedDate(`${day}-${month}-${year}`);
+    };
 
     const onSubmit = async (data) => {
-
         const file = data.imageFile[0];
         const image = await uploadImage(file);
 
@@ -18,32 +26,31 @@ const CampForm = () => {
             name: data.campName,
             image: image,
             fees: parseFloat(data.fees),
-            date: data.dateTime,
-            time: data.dateTime,
+            date: formattedDate,
+            time: data.timeRange,
             location: data.location,
-            healthcareProfessional: data.professionalName,
-            participantCount: parseInt(data.participantCount),
+            healthcareProfessional: "Dr. " + data.professionalName,
+            participantCount: 0,
             description: data.description,
-
-        }
+        };
 
         try {
-            const { data } = await axiosSecure.post('/camps', campData);
-            if (data.insertedId) {
+            const { data: response } = await axiosSecure.post('/camps', campData);
+            if (response.insertedId) {
                 Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Your work has been saved",
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Camp registered successfully!',
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 1500,
                 });
-
+                navigate('/dashboard/manage-camps')
             }
         } catch (error) {
             Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Something went wrong!",
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
             });
         }
     };
@@ -53,7 +60,8 @@ const CampForm = () => {
             component="form"
             onSubmit={handleSubmit(onSubmit)}
             sx={{
-                width: '50%',
+                width: '100%',
+                maxWidth: '700px',
                 margin: 'auto',
                 padding: 4,
                 bgcolor: 'background.paper',
@@ -65,7 +73,7 @@ const CampForm = () => {
                 Camp Registration
             </Typography>
 
-            <Box mb={3}>
+            <Box mb={2}>
                 <TextField
                     label="Camp Name"
                     fullWidth
@@ -75,14 +83,13 @@ const CampForm = () => {
                 />
             </Box>
 
-            <Box mb={3}>
+            <Box mb={2}>
                 <Typography variant="body1" mb={1}>
                     Choose Image File:
                 </Typography>
                 <input
                     type="file"
                     accept="image/*"
-
                     {...register('imageFile', { required: 'Image file is required' })}
                 />
                 {errors.imageFile && (
@@ -92,7 +99,7 @@ const CampForm = () => {
                 )}
             </Box>
 
-            <Box mb={3}>
+            <Box mb={2}>
                 <TextField
                     label="Camp Fees"
                     type="number"
@@ -103,19 +110,40 @@ const CampForm = () => {
                 />
             </Box>
 
-            <Box mb={3}>
+            <Box mb={2}>
                 <TextField
-                    label="Date & Time"
-                    type="datetime-local"
+                    label="Date (DD-MM-YYYY)"
+                    type="date"
                     fullWidth
-                    {...register('dateTime', { required: 'Date & Time is required' })}
                     InputLabelProps={{ shrink: true }}
-                    error={!!errors.dateTime}
-                    helperText={errors.dateTime?.message}
+                    onChange={handleDateChange}
+                    error={!!errors.date}
+                    helperText={errors.date?.message || 'Please select a date'}
+                />
+                {formattedDate && (
+                    <Typography variant="body2" color="text.secondary" mt={1}>
+                        Selected Date: {formattedDate}
+                    </Typography>
+                )}
+            </Box>
+
+            <Box mb={2}>
+                <TextField
+                    label="Time Range (e.g., 8:00 AM - 3:00 PM)"
+                    fullWidth
+                    {...register('timeRange', {
+                        required: 'Time Range is required',
+                        pattern: {
+                            value: /^[0-9]{1,2}:[0-9]{2}\s?(AM|PM)\s?-\s?[0-9]{1,2}:[0-9]{2}\s?(AM|PM)$/i,
+                            message: 'Invalid time range format. Use e.g., 8:00 AM - 3:00 PM',
+                        },
+                    })}
+                    error={!!errors.timeRange}
+                    helperText={errors.timeRange?.message}
                 />
             </Box>
 
-            <Box mb={3}>
+            <Box mb={2}>
                 <TextField
                     label="Location"
                     fullWidth
@@ -125,7 +153,7 @@ const CampForm = () => {
                 />
             </Box>
 
-            <Box mb={3}>
+            <Box mb={2}>
                 <TextField
                     label="Healthcare Professional Name"
                     fullWidth
@@ -135,7 +163,7 @@ const CampForm = () => {
                 />
             </Box>
 
-            <Box mb={3}>
+            <Box mb={2}>
                 <TextField
                     label="Participant Count"
                     type="number"
@@ -147,7 +175,7 @@ const CampForm = () => {
                 />
             </Box>
 
-            <Box mb={3}>
+            <Box mb={2}>
                 <TextField
                     label="Description"
                     multiline
@@ -163,8 +191,8 @@ const CampForm = () => {
                 type="submit"
                 variant="contained"
                 color="primary"
+                sx={{ padding: 1.2, fontSize: 16 }}
                 fullWidth
-                sx={{ padding: 1.5, fontSize: 16 }}
             >
                 Submit
             </Button>

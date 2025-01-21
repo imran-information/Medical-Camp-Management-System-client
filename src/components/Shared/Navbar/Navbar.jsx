@@ -48,7 +48,7 @@ const Navbar = () => {
   }
 
   const handleAnotherAccount = async () => {
-    navigate('/login')
+    navigate('/signup')
     await logOut()
   }
   if (isLoading) return <LoadingSpinner />

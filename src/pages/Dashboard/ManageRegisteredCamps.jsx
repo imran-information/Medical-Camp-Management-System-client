@@ -102,7 +102,7 @@ const ManageRegisteredCamps = () => {
             <Typography variant="h4" mb={3} align="center">
                 <Heading center={true} title={"Manage Registered Camps"} subtitle={"Only Paid data Show in table"} />
             </Typography>
-            <TableContainer component={Paper}>
+            <TableContainer className='m-0 md:m-10' component={Paper}>
                 <Table>
                     <TableHead>
                         <TableRow>

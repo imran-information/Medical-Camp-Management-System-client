@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import useAuth from "../../hooks/useAuth";
-import { uploadImage } from "../../utility/utility";
+import { saveUserDb, uploadImage } from "../../utility/utility";
 import BtnSpinner from "../../components/Shared/BtnSpinner";
 import Swal from "sweetalert2";
 
@@ -32,6 +32,8 @@ const SignUp = () => {
 
             // Update user profile with name and image URL
             await updateUserProfile(name, imageUrl);
+            //  user create in save DB 
+            await saveUserDb({ ...result?.user, displayName: name, photoURL: imageUrl })
             setLoading(false)
             console.log(result);
             navigate("/");
@@ -57,7 +59,8 @@ const SignUp = () => {
     const handleGoogleSignIn = async () => {
         setLoading(true)
         try {
-            await signInWithGoogle();
+            const data = await signInWithGoogle();
+            await saveUserDb(data?.user)
             navigate("/");
             Swal.fire({
                 position: "top-center",

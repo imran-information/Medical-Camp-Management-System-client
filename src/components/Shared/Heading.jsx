@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import { FaHeartbeat } from 'react-icons/fa'
 const Heading = ({ title, subtitle, center }) => {
   return (
-    <div className={`${center ? 'text-center' : 'text-start'} mb-8 px-[450px]`} >
+    <div className={`${center ? 'text-center' : 'text-start'} mb-8 md:px-[100px] lg:px-[250px] xl:px-[480px]`} >
       <div className='text-3xl font-bold text-lightBlue'>{title}</div>
       <p className="flex justify-center my-2">
         <FaHeartbeat className='text-2xl text-lightBlue ' />

@@ -11,14 +11,30 @@ import CardActions from '@mui/material/CardActions';
 const CampCard = ({ camp }) => {
     const navigate = useNavigate();
     return (
-        <Card sx={{ maxWidth: 400 }}>
-            <Link to={`/camp-details/${camp._id}`}>
+        <Card
+            sx={{
+                maxWidth: 400,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                transition: 'transform 0.3s, box-shadow 0.3s', // Smooth hover effect
+                '&:hover': {
+                    transform: 'scale(1.05)', // Slightly increase size
+                    boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.2)', // Add shadow
+                },
+            }}
+        >
+            <Link to={`/camp-details/${camp._id}`} style={{ textDecoration: 'none' }}>
                 <CardActionArea>
+                    {/* Fix image height */}
                     <CardMedia
                         component="img"
-                        height="140"
-                        image={camp.image}
-                        alt={camp.name}
+                        image={camp.image || 'path/to/default/image.jpg'} // Fallback image
+                        alt={camp.name || 'Camp Image'}
+                        sx={{
+                            height: 200,
+                            objectFit: 'cover',
+                        }}
                     />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
@@ -30,19 +46,24 @@ const CampCard = ({ camp }) => {
                             <strong>Location:</strong> {camp.location}
                         </Typography>
                         <Typography variant="body2" color="text.secondary" mt={2}>
-                            <strong>Healthcare Professional:</strong> {camp.healthcareProfessional}
+                            <strong>Healthcare Professional:</strong>{camp.healthcareProfessional}
                         </Typography>
                         <Typography variant="body2" color="text.secondary" mt={2}>
                             <strong>Fees:</strong> {camp.fees}
                         </Typography>
                         <Typography variant="body2" color="text.secondary" mt={2}>
-                            <strong>Participants:</strong> {camp.participantCount}
+                            <strong>Participants:</strong> {camp.participantCount ?? 'Not available'}
                         </Typography>
                     </CardContent>
                 </CardActionArea>
             </Link>
-            <CardActions>
-                <Button onClick={() => navigate(`/camp-details/${camp._id}`)} variant="outlined"> See Details</Button>
+            <CardActions sx={{ justifyContent: 'center', mt: 'auto' }}>
+                <Button
+                    onClick={() => navigate(`/camp-details/${camp._id}`)}
+                    variant="outlined"
+                >
+                    See Details
+                </Button>
             </CardActions>
         </Card>
     );

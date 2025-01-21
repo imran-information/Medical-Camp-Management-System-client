@@ -5,7 +5,7 @@ import useAuth from '../../hooks/useAuth';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-const FeedbackForm = ({ refetch }) => {
+const FeedbackForm = ({ refetch, organizer }) => {
     const axiosSecure = useAxiosSecure()
     const { user } = useAuth()
     const { campId } = useParams()
@@ -75,7 +75,7 @@ const FeedbackForm = ({ refetch }) => {
                         rows="4"
                     />
                 </div>
-                <Button type='submit' className='w-full' variant="contained" color="primary" sx={{ mt: 3 }}>
+                <Button disabled={organizer || !user} type='submit' className='w-full' variant="contained" color="primary" sx={{ mt: 3 }}>
                     Submit Feedback
                 </Button>
             </form>

@@ -6,11 +6,13 @@ import LoadingSpinner from '../Shared/LoadingSpinner';
 import Heading from '../Shared/Heading';
 import FeedbackList from './FeedbackList';
 import FeedbackForm from './FeedbackForm';
+import useOrganizer from '../../hooks/useOrganizer';
 
 
 const Feedbacks = () => {
     const { campId } = useParams()
     const axiosSecure = useAxiosSecure()
+    const [organizer] = useOrganizer()
 
 
     const { isLoading, error, data: feedbacks = [], refetch } = useQuery({
@@ -25,7 +27,7 @@ const Feedbacks = () => {
     return (
         <div>
             {/* FeedbackForm  */}
-            <FeedbackForm refetch={refetch} />
+            <FeedbackForm refetch={refetch} organizer={organizer} />
 
             {/* all Participant Feedbacks */}
             <Heading title={"Participant Feedbacks"} center={true} subtitle={"Hear from Participants About How Our Medical Camps Have Made a Positive Impact on Their Lives."} />

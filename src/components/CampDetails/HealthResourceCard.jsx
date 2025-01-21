@@ -6,11 +6,12 @@ import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 import { Link } from 'react-router-dom';
 import { Button, CardActions } from '@mui/material';
+import { contextType } from 'react-modal';
 
 const HealthResourceCard = ({ resource }) => {
     const { title, description, category, url, publication_date, company_image } = resource;
     return (
-        <Link to={url} className=''>
+        <Link to={url} className='mx-auto'>
             <Card sx={{ maxWidth: 345 }}>
                 <CardActionArea>
                     <CardMedia

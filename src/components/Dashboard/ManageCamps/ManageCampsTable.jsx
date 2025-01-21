@@ -34,7 +34,7 @@ const ManageCampsTable = ({ allCamps: camps, refetch }) => {
     }
 
     return (
-        <TableContainer component={Paper} sx={{ mt: 3 }}>
+        <TableContainer className='m-0 md:m-10' component={Paper} sx={{ mt: 3 }}>
             <Table>
                 <TableHead>
                     <TableRow>

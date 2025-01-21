@@ -87,7 +87,7 @@ const Banner = () => {
             >
                 {slides.map((slide, index) => (
                     <SwiperSlide key={index}>
-                        <div className="relative w-full h-[600px]">
+                        <div className="relative w-full h-[700px]  ">
                             {/* Image */}
                             <img
                                 src={slide.image}
@@ -100,7 +100,7 @@ const Banner = () => {
                                 <h1 className="text-3xl md:text-5xl font-bold mb-4">
                                     {slide.title}
                                 </h1>
-                                <p className="text-base md:text-lg mb-6 w-1/3">{slide.description.substring(0, 150)}...</p>
+                                <p className="text-base md:text-lg mb-6 md:w-1/3">{slide.description.substring(0, 150)}...</p>
                                 <div className="flex w-96 gap-3">
                                     <Button label={"Get Appointment"}></Button>
                                     <Button outline={true} label={"Learn More.."}></Button>
