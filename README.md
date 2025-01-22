@@ -17,11 +17,11 @@ The **Medical Camp Management System (MCMS)** is a MERN stack-based web applicat
 
 ---
 
-## 🔗 Repository Links
+<!-- ## 🔗 Repository Links
 - **Client Side**: [Client Repository](#)
 - **Server Side**: [Server Repository](#)
 
----
+--- -->
 
 ## ✨ Features
 1. **Responsive Design**: Fully responsive for mobile, tablet, and desktop, including dashboards.
@@ -58,18 +58,7 @@ The **Medical Camp Management System (MCMS)** is a MERN stack-based web applicat
     - JWT-based authentication for private routes.
 
 ---
-
-## 🛠️ Key Rules Followed
-- **GitHub Commits**: 
-  - Minimum of 20 notable commits for the client side.
-  - Minimum of 12 notable commits for the server side.
-- **Environment Variables**: Firebase config keys and MongoDB credentials are secured using environment variables.
-- **Sweet Alerts & Toasts**: Notifications for CRUD operations and authentication, avoiding browser alerts.
-- **TanStack Query**: Implemented for data fetching (GET requests only).
-- **404 Page**: Custom 404 page for invalid routes.
-- **Footer**: Includes essential links, contact info, and quick navigation options.
-
----
+ 
 
 ## 🚀 Advanced Features
 - **Pagination and Search**:
