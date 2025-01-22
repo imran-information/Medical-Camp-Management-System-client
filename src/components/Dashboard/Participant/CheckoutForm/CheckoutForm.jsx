@@ -71,7 +71,7 @@ const CheckoutForm = ({ handleClose, camp, refetch }) => {
                 card: card,
                 billing_details: {
                     name: camp?.participantName,
-                    name: camp?.participantEmail,
+                    email: camp?.participantEmail,
                 },
             },
         })
