@@ -86,7 +86,7 @@ const CampDetails = () => {
             <ParticipantRegistration closeModal={closeModal} isModalOpen={isModalOpen} refetch={refetch} camp={camp} />
 
             {/* camp feedbacks  */}
-            <Feedback />
+            {/* <Feedback /> */}
 
 
         </div>

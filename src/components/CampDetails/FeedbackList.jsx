@@ -1,7 +1,7 @@
 import { Tooltip } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
-const FeedbackList = ({ feedback }) => {
+const FeedbackList = ({ feedback, }) => {
     // console.log(feedback);
     return (
         <div className="p-6 bg-gray-50 rounded-lg">

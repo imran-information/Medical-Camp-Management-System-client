@@ -33,7 +33,7 @@ const Feedbacks = () => {
             <Heading title={"Participant Feedbacks"} center={true} subtitle={"Hear from Participants About How Our Medical Camps Have Made a Positive Impact on Their Lives."} />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
                 {
-                    feedbacks.map(feedback => <FeedbackList key={feedback._id} feedback={feedback} />)
+                    feedbacks.map(feedback => <FeedbackList key={feedback._id} feedback={feedback}  />)
                 }
             </div>
 
