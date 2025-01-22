@@ -11,7 +11,7 @@ import { contextType } from 'react-modal';
 const HealthResourceCard = ({ resource }) => {
     const { title, description, category, url, publication_date, company_image } = resource;
     return (
-        <Link to={url} className='mx-auto'>
+        <Link data-aos="zoom-in" data-aos-duration="1000" to={url} className='mx-auto'>
             <Card sx={{ maxWidth: 345 }}>
                 <CardActionArea>
                     <CardMedia

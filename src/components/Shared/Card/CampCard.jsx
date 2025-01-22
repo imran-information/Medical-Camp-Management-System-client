@@ -11,7 +11,7 @@ import CardActions from '@mui/material/CardActions';
 const CampCard = ({ camp }) => {
     const navigate = useNavigate();
     return (
-        <Card
+        <Card 
             sx={{
                 maxWidth: 400,
                 display: 'flex',

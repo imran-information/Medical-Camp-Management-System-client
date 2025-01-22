@@ -70,13 +70,15 @@ const HealthCategories = () => {
             <Grid container  >
                 {healthCategories.map((category, index) => (
                     <Grid key={index}>
-                        <Card className="ml-10 cursor-pointer" sx={{
-                            transition: 'transform 0.3s, box-shadow 0.3s',
-                            '&:hover': {
-                                transform: 'scale(1.05)',
-                                boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.2)',
-                            },
-                        }} variant="outlined" style={{ textAlign: "center" }}>
+                        <Card data-aos="flip-left"
+                            data-aos-easing="ease-out-cubic"
+                            data-aos-duration="2000" className="ml-10 cursor-pointer" sx={{
+                                transition: 'transform 0.3s, box-shadow 0.3s',
+                                '&:hover': {
+                                    transform: 'scale(1.05)',
+                                    boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.2)',
+                                },
+                            }} variant="outlined" style={{ textAlign: "center" }}>
                             <CardContent className="w-96">
                                 <div style={{ color: "#1976d2", }}>
                                     {category.icon}

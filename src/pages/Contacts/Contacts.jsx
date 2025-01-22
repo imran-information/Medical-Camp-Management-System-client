@@ -3,6 +3,8 @@ import { Grid, TextField, Button, Typography, Card, CardContent } from "@mui/mat
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import Heading from "../../components/Shared/Heading";
+import { Helmet } from "react-helmet-async";
 
 const contactInfo = [
     { icon: <PhoneIcon fontSize="large" />, label: "Phone", value: "+1 (234) 567-890" },
@@ -13,20 +15,23 @@ const contactInfo = [
 const Contacts = () => {
     return (
         <div className="container mx-auto" style={{ padding: "40px" }}>
-            <Typography
+            <Helmet>
+                <title>Contact Us | Medical Camp Management System</title>
+            </Helmet>
+            <Typography data-aos="fade-right" data-aos-duration="2000"
                 variant="h3"
                 align="center"
                 gutterBottom
                 style={{ fontWeight: "bold", marginBottom: "40px", color: "#1976d2" }}
             >
-                Contact Us
+                <Heading center title={"Contact Us"} />
             </Typography>
 
             {/* Contact Info Section */}
             <Grid container spacing={4} style={{ marginBottom: "40px" }}>
                 {contactInfo.map((info, index) => (
                     <Grid item xs={12} sm={4} key={index}>
-                        <Card
+                        <Card data-aos="fade-right" data-aos-duration="2000"
                             style={{
                                 textAlign: "center",
                                 padding: "20px",
@@ -49,11 +54,11 @@ const Contacts = () => {
             </Grid>
 
             {/* Contact Form */}
-            <Typography variant="h4" align="center" gutterBottom style={{ marginBottom: "20px" }}>
+            <Typography data-aos="fade-left" data-aos-duration="2000" variant="h4" align="center" gutterBottom style={{ marginBottom: "20px" }}>
                 Send Us a Message
             </Typography>
 
-            <form style={{ maxWidth: "600px", margin: "0 auto" }}>
+            <form data-aos="fade-left" data-aos-duration="2000" style={{ maxWidth: "600px", margin: "0 auto" }}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <TextField fullWidth label="Full Name" variant="outlined" required />

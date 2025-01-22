@@ -81,7 +81,7 @@ const UpdateCampForm = () => {
     };
 
     return (
-        <Grid
+        <Grid data-aos="fade-left" data-aos-duration="2000"
             container
             justifyContent="center"
             alignItems="center"

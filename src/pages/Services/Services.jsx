@@ -10,6 +10,8 @@ import HeartIcon from "@mui/icons-material/Favorite";
 import BloodDropIcon from "@mui/icons-material/Opacity";
 import BrainIcon from "@mui/icons-material/Psychology";
 import SaladIcon from "@mui/icons-material/EmojiNature";
+import Heading from "../../components/Shared/Heading";
+import { Helmet } from "react-helmet-async";
 
 const services = [
     { name: "General Check-Up", icon: <StethoscopeIcon fontSize="large" />, description: "Comprehensive health evaluations to ensure overall well-being." },
@@ -33,17 +35,20 @@ const Services = () => {
 
     return (
         <div className="container mx-auto" style={{ padding: "40px" }}>
-            <Typography
+            <Helmet>
+                <title>Services | Medical Camp Management System</title>
+            </Helmet>
+            <Typography data-aos="fade-right" data-aos-duration="2000"
                 variant="h3"
                 align="center"
                 gutterBottom
                 style={{ marginBottom: "20px", fontWeight: "bold", color: "#1976d2" }}
             >
-                Our Medical Services
+                <Heading center title={'Our Medical Services'} />
             </Typography>
 
             {/* Search Bar */}
-            <TextField
+            <TextField data-aos="fade-right" data-aos-duration="2000"
                 label="Search Services"
                 variant="outlined"
                 fullWidth
@@ -54,7 +59,7 @@ const Services = () => {
             <Grid container spacing={4}>
                 {filteredServices.length > 0 ? (
                     filteredServices.map((service, index) => (
-                        <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                        <Grid data-aos="flip-right" data-aos-duration="2000" item xs={12} sm={6} md={4} lg={3} key={index}>
                             <Card
                                 style={{
                                     transition: "transform 0.3s ease, box-shadow 0.3s ease",
@@ -68,7 +73,7 @@ const Services = () => {
                                     borderRadius: "10px",
                                 }}
                             >
-                                <CardContent>
+                                <CardContent >
                                     <div style={{ color: "#1976d2", marginBottom: "15px" }}>
                                         {service.icon}
                                     </div>

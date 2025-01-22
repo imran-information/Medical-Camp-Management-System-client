@@ -6,6 +6,7 @@ import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 import Heading from "../../components/Shared/Heading";
 import SearchBar from "../../components/Shared/SearchBar/SearchBar";
 import Pagination from "../../components/Shared/Pagination/Pagination";
+import { Helmet } from "react-helmet-async";
 
 const ManageCamps = () => {
     const axiosSecure = useAxiosSecure()
@@ -29,7 +30,10 @@ const ManageCamps = () => {
 
 
     return (
-        <div className="">
+        <div data-aos="fade-left" data-aos-duration="2000" className="">
+            <Helmet>
+                <title>Manage Camps | Medical Camp Management System</title>
+            </Helmet>
             <Heading title='Manage Camps' subtitle='Manage all camps here' center={true} />
             {/* searchBar */}
             <SearchBar onSearch={onSearch} />

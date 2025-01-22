@@ -3,6 +3,8 @@ import { Grid, Typography, Card, CardContent, Avatar } from "@mui/material";
 import MissionIcon from "@mui/icons-material/Lightbulb";
 import VisionIcon from "@mui/icons-material/Visibility";
 import TeamIcon from "@mui/icons-material/People";
+import Heading from "../../components/Shared/Heading";
+import { Helmet } from "react-helmet-async";
 
 const teamMembers = [
     { name: "Dr. Sarah Johnson", role: "Chief Medical Officer", image: "/images/sarah.jpg" },
@@ -13,17 +15,20 @@ const teamMembers = [
 const AboutUs = () => {
     return (
         <div className="container mx-auto" style={{ padding: "40px" }}>
-            <Typography
+            <Helmet>
+                <title> About Us | Medical Camp Management System</title>
+            </Helmet>
+            <Typography data-aos="fade-left" data-aos-duration="2000"
                 variant="h3"
                 align="center"
                 gutterBottom
                 style={{ fontWeight: "bold", marginBottom: "40px", color: "#1976d2" }}
             >
-                About Us
+                <Heading center title={" About Us"} />
             </Typography>
 
             {/* Mission and Vision Section */}
-            <Grid container spacing={4} style={{ marginBottom: "40px" }}>
+            <Grid data-aos="fade-left" data-aos-duration="2000" container spacing={4} style={{ marginBottom: "40px" }}>
                 <Grid item xs={12} sm={6}>
                     <Card style={{ padding: "20px", borderRadius: "10px" }}>
                         <CardContent>
@@ -59,17 +64,17 @@ const AboutUs = () => {
             </Grid>
 
             {/* Meet the Team Section */}
-            <Typography
+            <Typography data-aos="fade-right" data-aos-duration="2000"
                 variant="h4"
                 align="center"
                 gutterBottom
                 style={{ marginBottom: "20px", fontWeight: "bold", color: "#1976d2" }}
             >
-                Meet Our Team
+                <Heading center title={'Meet Our Team'} />
             </Typography>
             <Grid container spacing={4}>
                 {teamMembers.map((member, index) => (
-                    <Grid item xs={12} sm={4} key={index}>
+                    <Grid data-aos="fade-right" data-aos-duration="2000" item xs={12} sm={4} key={index}>
                         <Card
                             style={{
                                 textAlign: "center",

@@ -8,6 +8,7 @@ import ParticipantRegistration from '../../components/Modal/ParticipantRegistrat
 import Feedback from '../../components/CampDetails/Feedbacks';
 import useOrganizer from '../../hooks/useOrganizer';
 import useAuth from '../../hooks/useAuth';
+import { Helmet } from 'react-helmet-async';
 
 
 const CampDetails = () => {
@@ -35,9 +36,12 @@ const CampDetails = () => {
 
     return (
         <div className="container mx-auto px-6 py-12 min-h-screen">
+            <Helmet>
+                <title>Camp Details | Medical Camp Management System</title>
+            </Helmet>
             <Card sx={{ maxWidth: "full", margin: 'auto' }}>
                 <div className="lg:flex gap-4">
-                    <div className="flex-1 py-5 pl-5 rounded-md">
+                    <div data-aos="zoom-in" data-aos-duration="2000" className="flex-1 py-5 pl-5 rounded-md">
                         <CardMedia
                             component="img"
                             height="194"
@@ -46,7 +50,7 @@ const CampDetails = () => {
                             className="w-full h-auto rounded-md"
                         />
                     </div>
-                    <div className="flex-1">
+                    <div data-aos="zoom-in" data-aos-duration="2000" className="flex-1">
                         <CardContent>
                             <Typography variant="h4" gutterBottom>
                                 {camp.name}

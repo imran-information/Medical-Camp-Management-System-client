@@ -28,7 +28,7 @@ const PaymentsHistoryTable = ({ registeredCamps: paymentData = [], isLoading, re
                     </TableHead>
                     <TableBody>
                         {paymentData.map((row, index) => (
-                            <TableRow key={row?._id} className="hover:bg-gray-50">
+                            <TableRow data-aos="fade-left" data-aos-duration="2000" key={row?._id} className="hover:bg-gray-50">
                                 <TableCell>{index + 1}</TableCell>
                                 <TableCell>{row?.campData?.name}</TableCell>
                                 <TableCell>{row?.campData?.fees}</TableCell>

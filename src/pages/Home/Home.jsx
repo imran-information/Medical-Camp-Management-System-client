@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import LoadingSpinner from '../../components/Shared/LoadingSpinner';
 import MarqueeSlider from '../../components/Marquee/MarqueeSlider';
+import { Helmet } from 'react-helmet-async';
 
 
 
@@ -25,11 +26,14 @@ const Home = () => {
     // console.log(feedbacks);
     return (
         <div className='my-2'>
+            <Helmet>
+                <title>Medical Camp Management System</title>
+            </Helmet>
             <Banner />
 
-            <div className="container mx-auto">
+            <div className="container mx-auto ">
                 <CampShowcase />
-                {/*all camp feedbacks  */} 
+                {/*all camp feedbacks  */}
             </div>
             {/* Marque  */}
             <MarqueeSlider />

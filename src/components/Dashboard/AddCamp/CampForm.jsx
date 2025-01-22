@@ -5,6 +5,7 @@ import { uploadImage } from '../../../utility/utility';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const CampForm = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -69,6 +70,9 @@ const CampForm = () => {
                 boxShadow: 3,
             }}
         >
+            <Helmet>
+                <title>Camp Registration | Medical Camp Management System</title>
+            </Helmet>
             <Typography variant="h4" component="h1" align="center" mb={3}>
                 Camp Registration
             </Typography>

@@ -120,8 +120,10 @@ const UpdateProfile = () => {
             ) : (
                 <Dialog open={isEditing} onClose={() => setIsEditing(false)} fullWidth maxWidth="sm">
                     <DialogTitle>Update Profile</DialogTitle>
-                    <DialogContent>
-                        <div className="flex flex-col gap-4">
+                    <DialogContent >
+                        <div data-aos="flip-left"
+                            data-aos-easing="ease-out-cubic"
+                            data-aos-duration="2000" className="flex flex-col gap-4">
                             <TextField
                                 label="Name"
                                 name="name"
@@ -158,7 +160,9 @@ const UpdateProfile = () => {
                             )}
                         </div>
                     </DialogContent>
-                    <DialogActions>
+                    <DialogActions data-aos="flip-left"
+                        data-aos-easing="ease-out-cubic"
+                        data-aos-duration="2000">
                         <Button onClick={() => setIsEditing(false)} color="secondary">
                             Cancel
                         </Button>

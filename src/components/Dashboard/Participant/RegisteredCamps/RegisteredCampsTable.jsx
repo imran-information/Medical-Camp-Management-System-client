@@ -55,7 +55,7 @@ const RegisteredCampsTable = ({ registeredCamps = [], refetch }) => {
     return (
         <div className="p-5">
             <table className="table-auto w-full text-left border border-gray-200">
-                <thead>
+                <thead >
                     <tr className="bg-gray-100">
                         <th className="border px-4 py-2">Camp Name</th>
                         <th className="border px-4 py-2">Camp Fees</th>
@@ -66,9 +66,9 @@ const RegisteredCampsTable = ({ registeredCamps = [], refetch }) => {
                         <th className="border px-4 py-2">Feedback</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody >
                     {registeredCamps.map((camp) => (
-                        <tr key={camp._id}>
+                        <tr data-aos="fade-left" data-aos-duration="2000" key={camp._id}>
                             <td className="border px-4 py-2">{camp?.campData?.name}</td>
                             <td className="border px-4 py-2">{camp?.campData?.fees}</td>
                             <td className="border px-4 py-2">{camp?.participantName}</td>

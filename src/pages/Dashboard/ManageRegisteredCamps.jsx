@@ -10,6 +10,7 @@ import LoadingSpinner from '../../components/Shared/LoadingSpinner';
 import Heading from '../../components/Shared/Heading';
 import SearchBar from '../../components/Shared/SearchBar/SearchBar';
 import Pagination from '../../components/Shared/Pagination/Pagination';
+import { Helmet } from 'react-helmet-async';
 
 
 const ManageRegisteredCamps = () => {
@@ -110,7 +111,10 @@ const ManageRegisteredCamps = () => {
     };
 
     return (
-        <Box sx={{ width: '100%', margin: 'auto', mt: 4 }}>
+        <Box data-aos="fade-left" data-aos-duration="2000" sx={{ width: '100%', margin: 'auto', mt: 4 }}>
+            <Helmet>
+                <title>Manage Registered Camps | Medical Camp Management System</title>
+            </Helmet>
             <Typography variant="h4" mb={3} align="center">
                 <Heading center={true} title={"Manage Registered Camps"} subtitle={"Only Paid all data Show in table"} />
             </Typography>
@@ -133,7 +137,7 @@ const ManageRegisteredCamps = () => {
                     </TableHead>
                     <TableBody>
                         {registeredCamps.map((camp, index) => (
-                            <TableRow key={camp._id}>
+                            <TableRow data-aos="fade-left" data-aos-duration="2000" key={camp._id}>
                                 <TableCell>{index + 1}</TableCell>
                                 <TableCell>{camp.campData.name}</TableCell>
                                 <TableCell>{camp.campData.fees}</TableCell>

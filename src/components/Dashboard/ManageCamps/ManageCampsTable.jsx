@@ -35,7 +35,7 @@ const ManageCampsTable = ({ allCamps: camps, refetch }) => {
 
     return (
         <TableContainer className='m-0 md:m-10' component={Paper} sx={{ mt: 3 }}>
-            <Table>
+            <Table data-aos="fade-left" data-aos-duration="2000">
                 <TableHead>
                     <TableRow>
                         <TableCell><strong>Name</strong></TableCell>
@@ -47,7 +47,7 @@ const ManageCampsTable = ({ allCamps: camps, refetch }) => {
                 </TableHead>
                 <TableBody>
                     {camps.map((camp) => (
-                        <TableRow key={camp._id}>
+                        <TableRow data-aos="fade-left" data-aos-duration="2000" key={camp._id}>
                             <TableCell>{camp.name}</TableCell>
                             <TableCell>{camp.date}</TableCell>
                             <TableCell>{camp.location}</TableCell>
