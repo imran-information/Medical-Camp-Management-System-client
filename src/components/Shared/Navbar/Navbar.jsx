@@ -54,11 +54,11 @@ const Navbar = () => {
   if (isLoading) return <LoadingSpinner />
 
   const links = <>
-    <li><NavLink to='/'>Home</NavLink></li>
-    <li><NavLink to='/available-camps'>Available Camps</NavLink></li>
-    <li><NavLink to='/Services'>Services</NavLink> <a></a></li>
-    <li><NavLink to='/contacts'>Contact Us</NavLink></li>
-    <li><NavLink to='/about-us'>About Us</NavLink></li>
+    <li><NavLink className="hover:bg-primary hover:text-white hover:font-bold"  to='/'>Home</NavLink></li>
+    <li><NavLink className="hover:bg-primary hover:text-white hover:font-bold" to='/available-camps'>Available Camps</NavLink></li>
+    <li><NavLink className="hover:bg-primary hover:text-white hover:font-bold" to='/Services'>Services</NavLink></li>
+    <li><NavLink className="hover:bg-primary hover:text-white hover:font-bold" to='/contacts'>Contact Us</NavLink></li>
+    <li><NavLink className="hover:bg-primary hover:text-white hover:font-bold" to='/about-us'>About Us</NavLink></li>
   </>
 
   return (
