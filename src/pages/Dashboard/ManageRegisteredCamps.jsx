@@ -9,18 +9,23 @@ import { useQuery } from '@tanstack/react-query'
 import LoadingSpinner from '../../components/Shared/LoadingSpinner';
 import Heading from '../../components/Shared/Heading';
 import SearchBar from '../../components/Shared/SearchBar/SearchBar';
+import Pagination from '../../components/Shared/Pagination/Pagination';
 
 
 const ManageRegisteredCamps = () => {
     const axiosSecure = useAxiosSecure();
     const [search, setSearch] = useState('')
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [campCount, setTotalCampCount] = useState(0)
 
     const { isLoading, error, data: registeredCamps = [], refetch } = useQuery({
-        queryKey: ['registered-camps', search],
+        queryKey: ['registered-camps', search, page, rowsPerPage],
         queryFn: async () => {
             try {
-                const { data } = await axiosSecure.get(`/registered-camps?search=${search}`);
-                return data;
+                const res = await axiosSecure.get(`/registered-camps?search=${search}&page=${page}&size=${rowsPerPage}`);
+                setTotalCampCount(res.data.campParticipantCount)
+                return res.data.campParticipant
             } catch (error) {
                 console.error('Error fetching registered camps:', error);
             }
@@ -170,6 +175,7 @@ const ManageRegisteredCamps = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <Pagination campCount={campCount} page={page} setPage={setPage} rowsPerPage={rowsPerPage} setRowsPerPage={setRowsPerPage} />
         </Box>
     );
 };

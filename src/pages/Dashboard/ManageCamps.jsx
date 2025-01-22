@@ -19,12 +19,12 @@ const ManageCamps = () => {
     const { isLoading, error, data: allCamps = [], refetch, } = useQuery({
         queryKey: ['manage-camps', 'all-camps', search, page, rowsPerPage],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/all-camps?search=${search}&page=${page}&size=${rowsPerPage}`)
+            const res = await axiosSecure.get(`/all-camps-organizer?search=${search}&page=${page}&size=${rowsPerPage}`)
             setTotalCampCount(res.data.campCount)
             return res.data.allCamp
         }
     })
-    console.log(campCount);
+    // console.log(campCount);
     // if (isLoading) return <LoadingSpinner />
 
 

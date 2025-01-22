@@ -7,6 +7,8 @@ import FeedbackList from '../../components/CampDetails/FeedbackList';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import LoadingSpinner from '../../components/Shared/LoadingSpinner';
+import MarqueeSlider from '../../components/Marquee/MarqueeSlider';
+
 
 
 const Home = () => {
@@ -27,9 +29,11 @@ const Home = () => {
 
             <div className="container mx-auto">
                 <CampShowcase />
-
-
-                {/*all camp feedbacks  */}
+                {/*all camp feedbacks  */} 
+            </div>
+            {/* Marque  */}
+            <MarqueeSlider />
+            <div className="container mx-auto mt-20">
                 <Heading title={"Participant Feedbacks"} center={true} subtitle={"Hear from Participants About How Our Medical Camps Have Made a Positive Impact on Their Lives."} />
                 <div className="px-5">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
@@ -38,14 +42,11 @@ const Home = () => {
                         }
                     </div>
                 </div>
-
-
-
                 {/* Health Resource Hub */}
                 <HealthResourceHub />
             </div>
 
-        </div>
+        </div >
     );
 };
 

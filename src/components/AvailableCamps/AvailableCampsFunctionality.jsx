@@ -2,19 +2,25 @@ import React, { useState } from 'react';
 import CampCard from '../Shared/Card/CampCard';
 import { useQuery } from '@tanstack/react-query'
 import LoadingSpinner from '../Shared/LoadingSpinner';
-import axios from 'axios';
 import useAxiosPublic from '../../hooks/usePublic';
+import Pagination from '../Shared/Pagination/Pagination';
 
 const AvailableCampsFunctionality = () => {
     const [searchCamp, setSearchCamp] = useState('');
     const [sortOption, setSortOption] = useState('');
     const [layout, setLayout] = useState('three');
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [campCount, setTotalCampCount] = useState(0)
     const axiosPublic = useAxiosPublic()
+
+
     const { isLoading, error, data: allCamps = [] } = useQuery({
-        queryKey: ['allCamps', searchCamp, sortOption],
+        queryKey: ['allCamps', searchCamp, sortOption, page, rowsPerPage],
         queryFn: async () => {
-            const { data } = await axiosPublic.get(`/all-camps?search=${searchCamp}&sort=${sortOption}`)
-            return data
+            const res = await axiosPublic.get(`/all-camps?search=${searchCamp}&sort=${sortOption}&page=${page}&size=${rowsPerPage}`)
+            setTotalCampCount(res.data.campCount)
+            return res.data.allCamp
         }
     })
 
@@ -49,14 +55,12 @@ const AvailableCampsFunctionality = () => {
             </div>
 
             {/* Camp Cards */}
-            <div
-                className={`grid ${layout === 'three' ? 'grid-cols-1 md:grid-cols-3 lg:grid-cols-4 ' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 '} gap-6 mx-auto`}  >
+            <div className={`grid ${layout === 'three' ? 'grid-cols-1 md:grid-cols-3 lg:grid-cols-4 ' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 '} gap-6 mx-auto`}  >
                 {
                     allCamps.map(camp => <CampCard key={camp._id} camp={camp} />)
                 }
-
-
             </div>
+            <Pagination campCount={campCount} page={page} setPage={setPage} rowsPerPage={rowsPerPage} setRowsPerPage={setRowsPerPage} />
         </div>
     );
 };
