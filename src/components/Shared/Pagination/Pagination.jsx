@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import { TablePagination as MuiTablePagination } from '@mui/material';
 
-const CustomTablePagination = ({ allCamps }) => {
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
-
+const Pagination = ({ campCount, page, setPage, rowsPerPage, setRowsPerPage }) => {
     const handleChangePage = (event, newPage) => setPage(newPage);
     const handleChangeRowsPerPage = (event) => setRowsPerPage(+event.target.value);
 
@@ -12,7 +9,7 @@ const CustomTablePagination = ({ allCamps }) => {
         <div>
             <MuiTablePagination
                 component="div"
-                count={allCamps?.length}
+                count={campCount}
                 page={page}
                 onPageChange={handleChangePage}
                 rowsPerPage={rowsPerPage}
@@ -22,4 +19,4 @@ const CustomTablePagination = ({ allCamps }) => {
     );
 };
 
-export default CustomTablePagination;
+export default Pagination;

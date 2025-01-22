@@ -3,24 +3,28 @@ import ManageCampsTable from "../../components/Dashboard/ManageCamps/ManageCamps
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from '@tanstack/react-query'
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
-import TablePagination from "../../components/Dashboard/ManageCamps/TablePagination";
 import Heading from "../../components/Shared/Heading";
 import SearchBar from "../../components/Shared/SearchBar/SearchBar";
+import Pagination from "../../components/Shared/Pagination/Pagination";
 
 const ManageCamps = () => {
     const axiosSecure = useAxiosSecure()
     const [search, setSearch] = useState('')
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [campCount, setTotalCampCount] = useState(0)
     const onSearch = (search) => {
         setSearch(search);
     }
-    const { isLoading, error, data: allCamps = [], refetch } = useQuery({
-        queryKey: ['manage-camps', 'all-camps', search],
+    const { isLoading, error, data: allCamps = [], refetch, } = useQuery({
+        queryKey: ['manage-camps', 'all-camps', search, page, rowsPerPage],
         queryFn: async () => {
-            const { data } = await axiosSecure.get(`/all-camps?search=${search}`)
-            return data
+            const res = await axiosSecure.get(`/all-camps?search=${search}&page=${page}&size=${rowsPerPage}`)
+            setTotalCampCount(res.data.campCount)
+            return res.data.allCamp
         }
     })
-
+    console.log(campCount);
     // if (isLoading) return <LoadingSpinner />
 
 
@@ -28,10 +32,10 @@ const ManageCamps = () => {
         <div className="">
             <Heading title='Manage Camps' subtitle='Manage all camps here' center={true} />
             {/* searchBar */}
-            <SearchBar  onSearch={onSearch} />
+            <SearchBar onSearch={onSearch} />
             <ManageCampsTable allCamps={allCamps} refetch={refetch} />
 
-            {/* <TablePagination allCamps={allCamps} /> */}
+            <Pagination campCount={campCount} page={page} setPage={setPage} rowsPerPage={rowsPerPage} setRowsPerPage={setRowsPerPage} />
         </div>
     )
 
