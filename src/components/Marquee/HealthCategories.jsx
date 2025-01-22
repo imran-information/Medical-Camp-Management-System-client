@@ -70,7 +70,7 @@ const HealthCategories = () => {
             <Grid container  >
                 {healthCategories.map((category, index) => (
                     <Grid key={index}>
-                        <Card className="ml-10" sx={{
+                        <Card className="ml-10 cursor-pointer" sx={{
                             transition: 'transform 0.3s, box-shadow 0.3s',
                             '&:hover': {
                                 transform: 'scale(1.05)',

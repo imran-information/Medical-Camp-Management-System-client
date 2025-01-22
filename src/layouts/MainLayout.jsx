@@ -6,7 +6,9 @@ import Footer from '../components/Shared/Footer/Footer';
 const MainLayout = () => {
     return (
         <div className='font-[roboto]'>
-            <Navbar></Navbar>
+            <div className="">
+                <Navbar></Navbar>
+            </div>
             <div className="min-h-[calc(100vh-454px)] py-20">
                 <Outlet></Outlet>
             </div>

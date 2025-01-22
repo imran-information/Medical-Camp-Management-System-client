@@ -1,4 +1,5 @@
 import { FaFacebookF, FaGoogle, FaTwitter, FaVimeo, FaPinterest, FaLinkedinIn } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -7,16 +8,18 @@ const Footer = () => {
         <div className="container mx-auto flex flex-col md:flex-row items-center justify-between px-5">
           {/* Logo and Tagline */}
           <div className="mb-4 md:mb-0">
-            <h2 className="text-2xl font-bold">Medical Camp</h2>
+            <Link to='/' className="text-2xl font-bold">Medical Camp</Link>
             <p className="text-sm opacity-75">Empowering health, one camp at a time.</p>
           </div>
 
           {/* Navigation Links */}
           <div className="flex space-x-6 mb-4 md:mb-0">
-            <a href="#about" className="hover:underline">About Us</a>
-            <a href="#services" className="hover:underline">Services</a>
-            <a href="#contact" className="hover:underline">Contact</a>
-            <a href="#faq" className="hover:underline">FAQs</a>
+            <Link to='/' className="hover:underline">Home</Link>
+            <Link to='/available-camps' className="hover:underline">Available Camps</Link>
+            <Link to='/services' className="hover:underline">Services</Link>
+            <Link to='/contacts' className="hover:underline">Contact</Link>
+            <Link to='/about-us' className="hover:underline">About Us</Link>
+
           </div>
 
           {/* Social Media Icons */}
@@ -72,11 +75,11 @@ const Footer = () => {
             <h3 className="text-xl font-semibold mb-2">Quick Links</h3>
             <div className="h-1 w-10 bg-white mb-4 mx-auto  md:mx-0"></div>
             <ul className="text-sm space-y-2">
-              <li><a href="#home" className="hover:underline">Home</a></li>
-              <li><a href="#about" className="hover:underline">About Us</a></li>
-              <li><a href="#services" className="hover:underline">Services</a></li>
-              <li><a href="#cases" className="hover:underline">Our Cases</a></li>
-              <li><a href="#links" className="hover:underline">Other Links</a></li>
+              <li><Link to='/' className="hover:underline">Home</Link></li>
+              <li><Link to='/available-camps' className="hover:underline">Available Camps</Link></li>
+              <li><Link to='/services' className="hover:underline">Services</Link></li>
+              <li><Link to='/contacts' className="hover:underline">Contacts</Link></li>
+              <li><Link to='/about-us' className="hover:underline">About Us</Link></li>
             </ul>
           </div>
 

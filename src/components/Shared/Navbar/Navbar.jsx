@@ -56,24 +56,14 @@ const Navbar = () => {
   const links = <>
     <li><NavLink to='/'>Home</NavLink></li>
     <li><NavLink to='/available-camps'>Available Camps</NavLink></li>
-    <li><a>Services</a></li>
-    <li>
-      <details>
-        <summary>Blogs</summary>
-        <ul className="p-2">
-          <li><a>Submenu 1</a></li>
-          <li><a>Submenu 2</a></li>
-        </ul>
-      </details>
-    </li>
+    <li><NavLink to='/Services'>Services</NavLink> <a></a></li>
     <li><NavLink to='/contacts'>Contact Us</NavLink></li>
+    <li><NavLink to='/about-us'>About Us</NavLink></li>
   </>
-
-
 
   return (
     <div className='fixed w-full z-10 shadow-sm'>
-      <div className="navbar bg-base-100">
+      <div className="navbar bg-base-100 md:px-10 px-0">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -90,11 +80,27 @@ const Navbar = () => {
                   d="M4 6h16M4 12h8m-8 6h16" />
               </svg>
             </div>
+            <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+              {links}
+              {
+                user && isOrganizer && <Link to='/dashboard/organizer-profile'>
+                  <Button variant="">Dashboard</Button>
+                </Link>
+              }
+
+              {
+                user && !isOrganizer && <Link to='/dashboard/participant-profile'>
+                  <Button variant="">Dashboard</Button>
+                </Link>
+              }
+            </ul>
+
           </div>
+
           <div className="">
             <Link to='/' className='flex items-center  bg-inherit'>
-              <img src={logo} alt='logo' className='bg-inherit w-20 relative pb-5' />
-              <h4 className='text-2xl font-semibold'>Medical Camp</h4>
+              <img src={logo} alt='logo' className='bg-inherit w-20 relative pb-5 hidden lg:block' />
+              <h4 className='text-xl md:text-2xl font-semibold '>Medical Camp</h4>
             </Link>
           </div>
         </div>
@@ -112,13 +118,13 @@ const Navbar = () => {
           ) : <React.Fragment>
             <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
               {
-                user && isOrganizer && <Link to='/dashboard/organizer-profile'>
+                user && isOrganizer && <Link className='hidden md:block' to='/dashboard/organizer-profile'>
                   <Button variant="contained">Dashboard</Button>
                 </Link>
               }
 
               {
-                user && !isOrganizer && <Link to='/dashboard/participant-profile'>
+                user && !isOrganizer && <Link className='hidden md:block' to='/dashboard/participant-profile'>
                   <Button variant="contained">Dashboard</Button>
                 </Link>
               }

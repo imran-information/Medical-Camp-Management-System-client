@@ -18,6 +18,9 @@ import ParticipantProfile from "../pages/Dashboard/Participant/ParticipantProfil
 import Analytics from "../pages/Dashboard/Participant/Analytics";
 import RegisteredCamps from "../pages/Dashboard/Participant/RegisteredCamps";
 import PaymentHistory from "../pages/Dashboard/Participant/PaymentHistory";
+import Contacts from "../pages/Contacts/Contacts";
+import Services from "../pages/services/Services";
+import AboutUs from "../pages/AboutUs/AboutUs";
 
 
 
@@ -38,6 +41,18 @@ const router = createBrowserRouter([
             {
                 path: 'camp-details/:campId',
                 element: <CampDetails />
+            },
+            {
+                path: 'services',
+                element: <Services />
+            },
+            {
+                path: 'contacts',
+                element: <Contacts />
+            },
+            {
+                path: 'about-us',
+                element: <AboutUs />
             },
 
 
