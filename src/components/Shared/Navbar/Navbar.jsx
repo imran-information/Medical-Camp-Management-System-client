@@ -51,7 +51,7 @@ const Navbar = () => {
     navigate('/signup')
     await logOut()
   }
-  if (isLoading) return <LoadingSpinner />
+  // if (isLoading) return <LoadingSpinner />
 
   const links = <>
     <li><NavLink className="hover:bg-primary hover:text-white hover:font-bold"  to='/'>Home</NavLink></li>
