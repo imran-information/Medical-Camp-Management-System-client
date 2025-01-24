@@ -13,7 +13,7 @@ The **Medical Camp Management System (MCMS)** is a MERN stack-based web applicat
 ---
 
 ## 🌐 Live Site Link
-[Visit the live site here](#https://medical-camp-management-1b67d.web.app)
+[Visit the live site here](https://medical-camp-management-1b67d.web.app)
 
 ---
 
