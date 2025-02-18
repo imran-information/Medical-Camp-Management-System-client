@@ -5,12 +5,12 @@ import Heading from "../../Shared/Heading";
 
 const HowItWorks = () => {
     return (
-        <section className="bg-gray-50 py-16 px-6 md:px-12 lg:px-24">
+        <section className="bg-gray-50 py-16 px-5">
             {/* Section Header */}
-            <Heading 
-                center 
-                title={'How It Works'} 
-                subtitle={"Our platform simplifies the process of organizing and managing medical camps, ensuring a smooth, efficient experience every time."} 
+            <Heading
+                center
+                title={'How It Works'}
+                subtitle={"Our platform simplifies the process of organizing and managing medical camps, ensuring a smooth, efficient experience every time."}
             />
 
             {/* Timeline Section */}

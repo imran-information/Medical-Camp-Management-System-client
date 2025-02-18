@@ -8,6 +8,7 @@ import ShieldIcon from "@mui/icons-material/Shield";
 import BusinessIcon from "@mui/icons-material/Business";
 import FactoryIcon from "@mui/icons-material/Factory";
 import NatureIcon from "@mui/icons-material/Nature"; // Changed to NatureIcon
+import Heading from "../../Shared/Heading";
 
 const sponsors = [
     { id: 1, icon: <LocalHospitalIcon fontSize="large" />, name: "Healthcare Providers", description: "Innovative healthcare solutions for all." },
@@ -22,25 +23,12 @@ const sponsors = [
 
 const SponsorsAndPartners = () => {
     return (
-        <section style={{ backgroundColor: "#fafafa", padding: "80px 0" }}>
-            <div className="container mx-auto">
+        <section className="bg-white py-20">
+            <div className="container mx-auto ">
                 {/* Section Header */}
-                <motion.div
-                    className="text-center mb-16"
-                    initial={{ opacity: 0, y: -30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                >
-                    <Typography variant="h4" fontWeight="bold" color="primary" gutterBottom>
-                        Our Trusted Sponsors & Partners
-                    </Typography>
-                    <Typography variant="body1" color="textSecondary">
-                        Collaborating for a healthier future.
-                    </Typography>
-                </motion.div>
-
+                <Heading center title={" Our Trusted Sponsors & Partners"} subtitle={'Collaborating for a healthier future.'} />
                 {/* Sponsors Grid */}
-                <Grid container spacing={3} justifyContent="center">
+                <Grid className="px-5" container spacing={3} justifyContent="center">
                     {sponsors.map((sponsor, index) => (
                         <Grid item xs={12} sm={6} md={3} key={sponsor.id}>
                             <motion.div

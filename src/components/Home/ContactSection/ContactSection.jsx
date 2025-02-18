@@ -3,9 +3,9 @@ import { Grid, Box, Typography, Paper, TextField, Button } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import SupportIcon from "@mui/icons-material/Support"; // Added a new icon for support
+import SupportIcon from "@mui/icons-material/Support";
+import Heading from "../../Shared/Heading";
 
-// Component for the contact method cards (Email, Phone, Location, Support)
 const ContactMethodCard = ({ icon, title, detail }) => (
     <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
@@ -13,67 +13,78 @@ const ContactMethodCard = ({ icon, title, detail }) => (
         whileHover={{ scale: 1.05 }}
         transition={{ duration: 0.4 }}
     >
-        <Paper elevation={12} sx={styles.contactCard}>
-            <Box sx={styles.iconBox}>
+        <Paper elevation={12} sx={{
+            padding: 3,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: 4,
+            backgroundColor: "#ffffff",
+            boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.1)",
+            transition: "transform 0.3s ease",
+            height: "100%",
+            "&:hover": { transform: "translateY(-10px)" },
+        }}>
+            <Box sx={{
+                background: "#2D87F0",
+                padding: "16px",
+                borderRadius: "50%",
+                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                marginBottom: 2,
+                color: "white",
+            }}>
                 {icon}
             </Box>
-            <Typography variant="h5" sx={styles.cardTitle}>
+            <Typography variant="h5" sx={{
+                fontWeight: "bold",
+                marginBottom: 1,
+            }}>
                 {title}
             </Typography>
-            <Typography variant="body2" color="textSecondary" sx={styles.cardDetail}>
+            <Typography variant="body2" color="textSecondary" sx={{ textAlign: "center" }}>
                 {detail}
             </Typography>
         </Paper>
     </motion.div>
 );
 
-// Main Contact Section Component
 const ContactSection = () => {
     return (
-        <section style={styles.section}>
-            <div className="container mx-auto">
+        <section style={{
+            backgroundColor: "#f9f9f9",
+            padding: "80px 0",
+            position: "relative",
+        }}>
+            <div className="container mx-auto px-5">
                 {/* Section Header */}
-                <motion.div
-                    className="text-center mb-16"
-                    initial={{ opacity: 0, y: -30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                >
-                    <Typography variant="h3" fontWeight="bold" color="primary" gutterBottom>
-                        Get in Touch
-                    </Typography>
-                    <Typography variant="body1" color="textSecondary" sx={styles.sectionDescription}>
-                        We’re here to answer your questions and help you out. Reach out to us through any of the methods below.
-                    </Typography>
-                </motion.div>
-
+                <Heading center title={" Get in Touch"} subtitle={' We’re here to answer your questions and help you out. Reach out to us through any of the methods below.'} />
                 {/* Contact Details Grid */}
                 <Grid container spacing={4} justifyContent="center" alignItems="stretch">
-                    {/* Contact Methods */}
-                    <Grid item xs={12} sm={6} md={3}> {/* Updated to 3 for 4 cards */}
+                    <Grid item xs={12} sm={6} md={3}>
                         <ContactMethodCard
-                            icon={<EmailIcon fontSize="large" />}
+                            icon={<EmailIcon fontSize="medium" />}
                             title="Email Us"
                             detail="contact@email.com"
                         />
                     </Grid>
                     <Grid item xs={12} sm={6} md={3}>
                         <ContactMethodCard
-                            icon={<PhoneIcon fontSize="large" />}
+                            icon={<PhoneIcon fontSize="medium" />}
                             title="Call Us"
                             detail="+1 800 123 4567"
                         />
                     </Grid>
                     <Grid item xs={12} sm={6} md={3}>
                         <ContactMethodCard
-                            icon={<LocationOnIcon fontSize="large" />}
+                            icon={<LocationOnIcon fontSize="medium" />}
                             title="Visit Us"
                             detail="123 Main Street, City, Country"
                         />
                     </Grid>
-                    <Grid item xs={12} sm={6} md={3}> {/* Added the fourth card */}
+                    <Grid item xs={12} sm={6} md={3}>
                         <ContactMethodCard
-                            icon={<SupportIcon fontSize="large" />}
+                            icon={<SupportIcon fontSize="medium" />}
                             title="Support"
                             detail="support@email.com"
                         />
@@ -86,16 +97,44 @@ const ContactSection = () => {
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.4 }}
                         >
-                            <Paper elevation={12} sx={styles.formPaper}>
-                                <Typography variant="h5" fontWeight="bold" sx={styles.formTitle}>
+                            <Paper elevation={12} sx={{
+                                padding: 4,
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center",
+                                borderRadius: 4,
+                                backgroundColor: "#ffffff",
+                                boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.1)",
+                                height: "100%",
+                            }}>
+                                <Typography variant="h5" fontWeight="bold" sx={{ marginBottom: 3 }}>
                                     Send us a Message
                                 </Typography>
 
-                                <TextField label="Your Name" variant="outlined" fullWidth margin="normal" sx={styles.textField} />
-                                <TextField label="Your Email" variant="outlined" fullWidth margin="normal" sx={styles.textField} />
-                                <TextField label="Your Message" variant="outlined" fullWidth multiline rows={4} margin="normal" sx={styles.textField} />
+                                <TextField label="Your Name" variant="outlined" fullWidth margin="normal" sx={{
+                                    "& .MuiInputLabel-root": { fontSize: "1.1rem" },
+                                    "& .MuiOutlinedInput-root": { borderRadius: "12px" },
+                                }} />
+                                <TextField label="Your Email" variant="outlined" fullWidth margin="normal" sx={{
+                                    "& .MuiInputLabel-root": { fontSize: "1.1rem" },
+                                    "& .MuiOutlinedInput-root": { borderRadius: "12px" },
+                                }} />
+                                <TextField label="Your Message" variant="outlined" fullWidth multiline rows={4} margin="normal" sx={{
+                                    "& .MuiInputLabel-root": { fontSize: "1.1rem" },
+                                    "& .MuiOutlinedInput-root": { borderRadius: "12px" },
+                                }} />
 
-                                <Button variant="contained" color="primary" sx={styles.submitButton}>
+                                <Button variant="contained" color="primary" sx={{
+                                    marginTop: 2,
+                                    padding: "12px 24px",
+                                    borderRadius: "12px",
+                                    fontWeight: "bold",
+                                    textTransform: "none",
+                                    "&:hover": {
+                                        backgroundColor: "#2563eb",
+                                        boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.2)",
+                                    },
+                                }}>
                                     Send Message
                                 </Button>
                             </Paper>
@@ -105,81 +144,6 @@ const ContactSection = () => {
             </div>
         </section>
     );
-};
-
-// Styles Object
-const styles = {
-    section: {
-        backgroundColor: "#f9f9f9",
-        padding: "80px 0",
-        position: "relative",
-    },
-    sectionDescription: {
-        maxWidth: "600px",
-        margin: "0 auto",
-    },
-    formPaper: {
-        padding: 4,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        borderRadius: 4,
-        backgroundColor: "#ffffff",
-        boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.1)",
-        height: "100%",
-    },
-    formTitle: {
-        marginBottom: 3,
-    },
-    contactCard: {
-        padding: 3,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        borderRadius: 4,
-        backgroundColor: "#ffffff",
-        boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.1)",
-        transition: "transform 0.3s ease",
-        height: "100%",
-        "&:hover": {
-            transform: "translateY(-10px)",
-        },
-    },
-    cardTitle: {
-        fontWeight: "bold",
-        marginBottom: 1,
-    },
-    cardDetail: {
-        textAlign: "center",
-    },
-    iconBox: {
-        background: "#2D87F0",
-        padding: "16px",
-        borderRadius: "50%",
-        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-        marginBottom: 2,
-        color: "white",
-    },
-    textField: {
-        "& .MuiInputLabel-root": {
-            fontSize: "1.1rem",
-        },
-        "& .MuiOutlinedInput-root": {
-            borderRadius: "12px",
-        },
-    },
-    submitButton: {
-        marginTop: 2,
-        padding: "12px 24px",
-        borderRadius: "12px",
-        fontWeight: "bold",
-        textTransform: "none",
-        "&:hover": {
-            backgroundColor: "#2563eb",
-            boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.2)",
-        },
-    },
 };
 
 export default ContactSection;

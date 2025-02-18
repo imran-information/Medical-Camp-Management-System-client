@@ -10,6 +10,10 @@ import {
 import researchImg from '../../../assets/images/Latest-Medical/research.jpg';
 import vaccination from '../../../assets/images/Latest-Medical/vaccination.avif';
 import telemedicine from '../../../assets/images/Latest-Medical/telemedicine.avif';
+import aiHealthcare from '../../../assets/images/Latest-Medical/aiHealthcare.jpg';
+import mentalHealth from '../../../assets/images/Latest-Medical/mentalHealth.jpg';
+import wearableTech from '../../../assets/images/Latest-Medical/wearableTech.jpg';
+import Heading from "../../Shared/Heading";
 
 const LatestMedicalNews = () => {
     const news = [
@@ -37,70 +41,119 @@ const LatestMedicalNews = () => {
             image: telemedicine,
             date: "September 05, 2023",
         },
+        {
+            id: 4,
+            title: "AI in Healthcare: The Future of Diagnosis",
+            excerpt:
+                "AI is being integrated into healthcare systems to improve diagnostic accuracy and speed.",
+            image: aiHealthcare,
+            date: "September 20, 2023",
+        },
+        {
+            id: 5,
+            title: "Mental Health Awareness: New Initiatives",
+            excerpt:
+                "Programs aimed at increasing mental health awareness and support have gained traction across the globe.",
+            image: mentalHealth,
+            date: "September 18, 2023",
+        },
+        {
+            id: 6,
+            title: "Wearable Technology: The New Frontier in Health Monitoring",
+            excerpt:
+                "Wearable devices are enabling continuous health monitoring, improving patient outcomes and care.",
+            image: wearableTech,
+            date: "September 12, 2023",
+        },
     ];
 
+
     return (
-        <section className="bg-gray-50 py-16 px-6 md:px-12 lg:px-24">
+        <section className="container mx-auto py-20 px-6">
             {/* Section Header */}
-            <div className="container mx-auto text-center max-w-3xl mb-12">
-                <motion.h2
-                    className="text-4xl md:text-5xl font-bold text-primary mb-4"
-                    initial={{ opacity: 0, y: -30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7 }}
-                >
-                    Latest Medical News & Updates
-                </motion.h2>
-                <motion.p
-                    className="text-lg md:text-xl text-gray-600"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
-                >
-                    Stay informed with the latest breakthroughs and developments in medical science.
-                </motion.p>
-            </div>
+            <Heading center title={'Latest Medical News & Updates'} subtitle={'Stay informed with the latest breakthroughs and developments in medical science.'} />
 
             {/* News Cards Grid */}
-            <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 {news.map((item, index) => (
-                    <motion.div
+                    <div
                         key={item.id}
-                        className="bg-white rounded-xl shadow-lg overflow-hidden"
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        whileHover={{ scale: 1.03 }}
-                        transition={{ duration: 0.3, delay: index * 0.2 }}
+                        className=" rounded-xl shadow-lg overflow-hidden transform transition-all hover:scale-105"
+                        style={{
+                            transition: 'transform 0.3s, box-shadow 0.3s',
+                        }}
+                        // Hover effect with scale and box-shadow
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.transform = 'scale(1.05)';
+                            e.currentTarget.style.boxShadow = '0px 4px 20px rgba(0, 0, 0, 0.2)';
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = 'scale(1)';
+                        }}
                     >
-                        <Card className="h-full flex flex-col">
+                        <Card
+                            className="h-full flex flex-col"
+                            sx={{
+                                backgroundColor: '#f9fafb',
+                            }}
+                        >
+                            {/* Image Section */}
                             <CardMedia
                                 component="img"
                                 image={item.image}
                                 alt={item.title}
-                                sx={{ height:250, objectFit: "cover" }}
+                                sx={{
+                                    height: 250,
+                                    objectFit: 'cover',
+                                    transition: 'transform 0.3s ease',
+                                    '&:hover': { transform: 'scale(1.05)' },
+                                }}
                             />
-                            <CardContent sx={{ flexGrow: 1, p: 2 }}>
-                                <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: "bold" }}>
+
+                            {/* Content Section */}
+                            <CardContent sx={{ flexGrow: 1, p: 3 }}>
+                                <Typography
+                                    gutterBottom
+                                    variant="h6"
+                                    component="div"
+                                    sx={{
+                                        fontWeight: 'bold',
+                                        fontSize: '1.125rem',
+                                        color: 'primary.main',
+                                        transition: 'color 0.3s ease',
+                                        '&:hover': { color: 'secondary.main' },
+                                    }}
+                                >
                                     {item.title}
                                 </Typography>
-                                <Typography variant="body2" color="text.secondary">
+                                <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.9rem', lineHeight: 1.5 }}>
                                     {item.excerpt}
                                 </Typography>
                             </CardContent>
-                            <CardActions sx={{ p: 2, pt: 0 }}>
-                                <Typography variant="caption" color="text.secondary">
+
+                            {/* Footer Section */}
+                            <CardActions sx={{ p: 2, pt: 0, display: 'flex', justifyContent: 'space-between' }}>
+                                <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.8rem' }}>
                                     {item.date}
                                 </Typography>
                                 <Button
+                                    variant="outlined"
                                     size="small"
-                                    color="primary"
-                                    sx={{ ml: "auto", textTransform: 'none' }}
+                                    sx={{
+                                        borderColor: 'primary.main',
+                                        color: 'primary.main',
+                                        textTransform: 'none',
+                                        '&:hover': { backgroundColor: 'primary.main', color: '#fff' },
+                                    }}
                                 >
-                                    Read More
+                                    Learn More
                                 </Button>
+
+
                             </CardActions>
                         </Card>
-                    </motion.div>
+
+                    </div>
                 ))}
             </div>
         </section>

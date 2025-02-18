@@ -11,6 +11,7 @@ import AboutUs from '../../components/Home/aboutUs/AboutUs';
 import NewsletterSubscription from '../../components/Home/NewsletterSubscription/NewsletterSubscription';
 import ContactSection from '../../components/Home/ContactSection/ContactSection';
 import { Helmet } from 'react-helmet-async';
+import MarqueeSlider from '../../components/Marquee/MarqueeSlider';
 
 const Home = () => {
     return (
@@ -21,18 +22,20 @@ const Home = () => {
 
             {/* Banner / slider */}
             <Banner />
-            
+
             {/* Camp Showcase */}
             <CampShowcase />
 
             {/* How It Works */}
             <HowItWorks />
 
-            {/* Key Features */}
-            <KeyFeatures />
-
+            {/* MarqueeSlider */}
+            <MarqueeSlider />
             {/* Latest Medical News */}
             <LatestMedicalNews />
+
+            {/* Key Features */}
+            <KeyFeatures />
 
             {/* Health Resource Hub */}
             <HealthResourceHub />

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { TrackChanges, MedicalServices, Handshake, Lightbulb } from "@mui/icons-material"; // Correct import
+import Heading from "../../Shared/Heading";
 
 const AboutUs = () => {
     const cards = [
@@ -26,29 +27,12 @@ const AboutUs = () => {
     ];
 
     return (
-        <section className="bg-gray-50 py-16 px-6 md:px-12 lg:px-24">
+        <section className="bg-gray-50 py-20 ">
             {/* Section Header */}
-            <div className="container mx-auto text-center max-w-3xl">
-                <motion.h2
-                    className="text-5xl font-extrabold text-primary mb-5" // Primary color applied to title
-                    initial={{ opacity: 0, y: -30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, ease: "easeOut" }}
-                >
-                    Medical Camp Management
-                </motion.h2>
-                <motion.p
-                    className="text-lg text-gray-600 leading-relaxed"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
-                >
-                    We provide strategic medical camp planning and execution, ensuring efficient healthcare access for communities in need.
-                </motion.p>
-            </div>
+            <Heading center title={'Medical Camp Management'} subtitle={"We provide strategic medical camp planning and execution, ensuring efficient healthcare access for communities in need."} />
 
             {/* Cards Section */}
-            <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-14">
+            <div className="container mx-auto px-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-14">
                 {cards.map((card, index) => (
                     <motion.div
                         key={index}

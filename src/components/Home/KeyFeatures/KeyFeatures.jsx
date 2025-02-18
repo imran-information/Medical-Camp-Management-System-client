@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { CheckCircle, AccessAlarm, People, FileCopy } from "@mui/icons-material"; // Updated icons for professionalism
+import Heading from "../../Shared/Heading";
 
 const KeyFeatures = () => {
     const features = [
@@ -26,33 +27,15 @@ const KeyFeatures = () => {
     ];
 
     return (
-        <section className="bg-white py-16 px-6 md:px-12 lg:px-24">
+        <section className="bg-gray-50 py-20  ">
             {/* Section Header */}
-            <div className="container mx-auto text-center max-w-3xl">
-                <motion.h2
-                    className="text-4xl font-semibold text-primary mb-6"
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
-                >
-                    Key Features
-                </motion.h2>
-                <motion.p
-                    className="text-lg text-gray-600 leading-relaxed mb-12"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
-                >
-                    Our solution offers a comprehensive suite of features designed to help you organize and manage medical camps more effectively.
-                </motion.p>
-            </div>
-
+            <Heading center title={"Key Features"} subtitle={" Our solution offers a comprehensive suite of features designed to help you organize and manage medical camps more effectively."} />
             {/* Features Section */}
-            <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="container mx-auto px-6  grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 {features.map((feature, index) => (
                     <motion.div
                         key={index}
-                        className="bg-gray-50 shadow-lg rounded-xl p-8 flex flex-col items-center text-center transform transition-all duration-300 hover:shadow-xl"
+                        className="bg-white shadow-lg rounded-xl p-8 flex flex-col items-center text-center transform transition-all duration-300 hover:shadow-xl"
                         whileHover={{ scale: 1.05 }}
                     >
                         <motion.div

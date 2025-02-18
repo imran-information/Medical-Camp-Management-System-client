@@ -1,50 +1,41 @@
+import React from "react";
 import { Tooltip } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
-const FeedbackList = ({ feedback, }) => {
-    // console.log(feedback);
+const FeedbackList = ({ feedback }) => {
     return (
-        <div  className="p-6 bg-gray-50 rounded-lg">
-            {feedback.length === 0 ? (
-                <p className="text-2xl text-black">No feedback available for this camp.</p>
-            ) : (
-                <div data-aos="flip-right"
-              
-                data-aos-duration="2000" className="space-y-4">
-                    <div
-                        key={feedback.participantId}
-                        className="bg-white shadow-md rounded-lg p-4 gap-4"
-                    >
-                        <div className=" flex items-center gap-2 ">
-                            <img
-                                src={feedback.participantImage}
-                                alt={feedback.participantName}
-                                className="w-16 h-16 rounded-full object-cover"
-                            />
-                            <div className="">
-                                <h3 className="font-semibold">{feedback.participantName}</h3>
-                                <p className="text-sm text-gray-500">{feedback.date}</p>
-                            </div>
-                        </div>
-                        <div>
-                            <Tooltip title={feedback.feedback} arrow placement="top">
-                                <p className="mt-2">
-                                    {feedback.feedback.slice(0, 50)}...
-                                </p>
-                            </Tooltip>
-                            <div className="mt-2">
-                                <span className="text-yellow-500">
-                                    {"⭐".repeat(feedback.rating)}
-                                </span>
-                                <span className="text-gray-300">
-                                    {"⭐".repeat(5 - feedback.rating)}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+        <motion.div
+            className="bg-white shadow-md rounded-lg p-5 flex flex-col gap-4 hover:shadow-lg transition-all duration-300"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            whileHover={{ scale: 1.02 }}
+        >
+            {/* Participant Info */}
+            <div className="flex items-center gap-4">
+                <img
+                    src={feedback.participantImage}
+                    alt={feedback.participantName}
+                    className="w-16 h-16 rounded-full object-cover border-2 border-gray-300"
+                />
+                <div>
+                    <h3 className="font-semibold text-lg text-gray-800">{feedback.participantName}</h3>
+                    <p className="text-sm text-gray-500">{feedback.date}</p>
                 </div>
-            )}
-        </div>
+            </div>
+
+            {/* Feedback Content */}
+            <Tooltip title={feedback.feedback} arrow placement="top">
+                <p className="text-gray-700 cursor-pointer">
+                    {feedback.feedback.length > 80 ? `${feedback.feedback.slice(0, 80)}...` : feedback.feedback}
+                </p>
+            </Tooltip>
+
+            {/* Star Ratings */}
+            <div className="mt-2 flex items-center">
+                <span className="text-yellow-500 text-lg">{"⭐".repeat(feedback.rating)}</span>
+                <span className="text-gray-300 text-lg">{"⭐".repeat(5 - feedback.rating)}</span>
+            </div>
+        </motion.div>
     );
 };
 
