@@ -21,7 +21,7 @@ const CampShowcase = () => {
     if (isLoading) return <LoadingSpinner />
 
     return (
-        <div className=" px-6 py-20">
+        <div className="container mx-auto px-6 py-20">
             <Heading title={"Popular Medical Camps"} subtitle={"Top Medical Camps with Maximum Participation Top Medical Camps with Maximum Participation"} center={true} />
             {/* Camp Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-6 ">

@@ -3,107 +3,69 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { Navigation, Pagination, Mousewheel, Keyboard, Autoplay } from 'swiper/modules';
-import "swiper/css/autoplay"; // Autoplay styles
-import bannerImg1 from '../../assets/images/banner/banner-1.jpg'
-import bannerImg2 from '../../assets/images/banner/banner-2.jpg'
-import bannerImg3 from '../../assets/images/banner/banner-3.jpg'
-import bannerImg4 from '../../assets/images/banner/banner-4.jpg'
-import bannerImg5 from '../../assets/images/banner/banner-5.jpg'
-import bannerImg6 from '../../assets/images/banner/banner-6.jpg'
-import Button from '../Shared/Button/Button';
+import { Navigation, Pagination, Autoplay, EffectFade } from 'swiper/modules';
+import "swiper/css/effect-fade"; // Smooth fade effect
+import bannerImg1 from '../../assets/images/banner/banner-1.jpg';
+import bannerImg2 from '../../assets/images/banner/banner-2.jpg';
+import bannerImg3 from '../../assets/images/banner/banner-3.jpg';
+import bannerImg4 from '../../assets/images/banner/banner-4.jpg';
+import bannerImg5 from '../../assets/images/banner/banner-5.jpg';
+import bannerImg6 from '../../assets/images/banner/banner-6.jpg';
 
-
-
+const slides = [
+    { title: "Successful Health Camp in 2023", description: "We treated over 500 patients and performed 100 life-changing surgeries.", image: bannerImg1 },
+    { title: "Empowering Communities", description: "Educating over 1,000 villagers on preventive healthcare and wellness.", image: bannerImg2 },
+    { title: "Women’s Health Initiative", description: "Conducted workshops on maternal health, child nutrition, and reproductive health.", image: bannerImg3 },
+    { title: "Youth Engagement Program", description: "Engaging students through health and hygiene awareness sessions.", image: bannerImg4 },
+    { title: "Disaster Relief and Recovery", description: "Providing emergency aid and medical checkups to affected individuals.", image: bannerImg5 },
+    { title: "Advancing Medical Access", description: "Expanding healthcare services to underserved regions.", image: bannerImg6 },
+];
 
 const Banner = () => {
-    const slides = [
-        {
-            title: "Successful Health Camp in 2023",
-            description: `In our 2023 health camp, we successfully treated over 500 patients, 
-                  providing essential medical care to underserved communities. 
-                  Our team of dedicated doctors and volunteers performed 100 life-changing surgeries, 
-                  ensuring that individuals in need received quality healthcare and support.`,
-            image: bannerImg1,
-        },
-        {
-            title: "Empowering Communities",
-            description: `Through our outreach programs, we educated over 1,000 villagers 
-                  on the importance of preventive healthcare. The initiative emphasized 
-                  sanitation, nutrition, and early detection of illnesses, fostering healthier 
-                  living environments and empowering communities to take charge of their health.`,
-            image: bannerImg2,
-        },
-        {
-            title: "Women’s Health Initiative",
-            description: `We conducted specialized workshops on maternal health, child nutrition, 
-                  and reproductive health for over 500 women. These sessions addressed critical 
-                  issues, providing resources and support to empower women and improve family health.`,
-            image: bannerImg3,
-        },
-        {
-            title: "Youth Engagement Program",
-            description: `Focusing on the next generation, we engaged over 300 students through health 
-                  and hygiene workshops. These interactive sessions fostered awareness of healthy 
-                  habits, aiming to cultivate lifelong practices that enhance personal and community health.`,
-            image: bannerImg4,
-        },
-        {
-            title: "Disaster Relief and Recovery",
-            description: `In response to recent natural disasters, we provided emergency medical aid to 
-                  over 1,500 individuals. Our team delivered essential supplies, conducted medical 
-                  check-ups, and helped families rebuild their lives by addressing immediate health concerns.`,
-            image: bannerImg5,
-        },
-        {
-            title: "Empowering Communities",
-            description: `Through our outreach programs, we educated over 1,000 villagers 
-                  on the importance of preventive healthcare. The initiative emphasized 
-                  sanitation, nutrition, and early detection of illnesses, fostering healthier 
-                  living environments and empowering communities to take charge of their health.`,
-            image: bannerImg6,
-        },
-
-    ];
     return (
-        <div className="w-full">
+        <div className="w-full h-screen">
             <Swiper
-                modules={[Navigation, Pagination, Mousewheel, Keyboard, Autoplay]}
-                spaceBetween={30}
+                modules={[Navigation, Pagination, Autoplay, EffectFade]}
+                spaceBetween={0}
                 slidesPerView={1}
-                cssMode={true}
                 navigation={true}
-                pagination={{
-                    clickable: true,
-                }}
-                mousewheel={true}
-                keyboard={true}
-                className="mySwiper"
-                autoplay={{
-                    delay: 5000,
-                    disableOnInteraction: false,
-                }}
+                pagination={{ clickable: true }}
+                autoplay={{ delay: 5000, disableOnInteraction: false }}
                 loop={true}
+                effect="fade"
+                speed={1000}
+                className="h-full"
             >
                 {slides.map((slide, index) => (
                     <SwiperSlide key={index}>
-                        <div className="relative w-full h-[700px]  ">
-                            {/* Image */}
+                        <div className="relative w-full h-screen">
+                            {/* Fullscreen Background Image */}
                             <img
                                 src={slide.image}
                                 alt={slide.title}
-                                className="w-full h-full object-cover"
+                                className="absolute w-full h-full object-cover"
                             />
 
-                            {/* Overlay with Text */}
-                            <div className="absolute inset-0 flex flex-col items-center justify-center text-center bg-black bg-opacity-50 text-white p-5">
-                                <h1 className="text-3xl md:text-5xl font-bold mb-4">
+                            {/* Overlay */}
+                            <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white text-center px-6">
+                                <h1 className="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg">
                                     {slide.title}
                                 </h1>
-                                <p className="text-base md:text-lg mb-6 md:w-1/3">{slide.description.substring(0, 150)}...</p>
-                                <div className="flex w-96 gap-3">
-                                    <Button label={"Get Appointment"}></Button>
-                                    <Button outline={true} label={"Learn More.."}></Button>
+                                <p className="text-lg md:text-xl max-w-2xl mb-6 opacity-90">
+                                    {slide.description}
+                                </p>
+
+                                {/* Buttons */}
+                                <div className="flex space-x-4">
+                                    {/* Primary Button (Deep Blue) */}
+                                    <button className="px-5 py-2 bg-primary hover:bg-blue-700 text-white font-semibold text-lg rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300">
+                                        Get Started
+                                    </button>
+
+                                    {/* Secondary Button (Glassmorphism) */}
+                                    <button className="px-5 py-2 bg-white bg-opacity-20 border-2 border-white text-white font-semibold text-lg rounded-lg shadow-lg   hover:bg-white hover:text-primary transform hover:scale-105 transition-all duration-300">
+                                        Book a Camp
+                                    </button>
                                 </div>
                             </div>
                         </div>
