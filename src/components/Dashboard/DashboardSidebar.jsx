@@ -11,7 +11,7 @@ import useOrganizer from '../../hooks/useOrganizer';
 import LoadingSpinner from '../Shared/LoadingSpinner';
 import { IoMdAnalytics } from "react-icons/io";
 import { HiMenuAlt3 } from "react-icons/hi";
-
+import SideNavbar from "../Shared/SideNavbar/SideNavbar.jsx";
 const Dashboard = () => {
     const [isOrganizer, isLoading] = useOrganizer();
     const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Sidebar toggle state
@@ -22,7 +22,7 @@ const Dashboard = () => {
         <div className="flex">
             {/* Sidebar */}
             <div
-                className={`fixed z-50 top-0 left-0 bg-lightBlue text-white p-5 h-screen transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+                className={`fixed z-50 top-0 left-0 bg-primary text-white p-5 h-screen transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
                     } transition-transform duration-300 w-64 sm:w-72 md:w-80`}
             >
                 <Link to="/" className="flex items-center bg-inherit">
@@ -154,9 +154,9 @@ const Dashboard = () => {
 
             {/* Main Content */}
             <div
-                className={`container mx-auto py-10 transition-all duration-300 ${isSidebarOpen ? "ml-64 sm:ml-72 md:ml-80" : "ml-0"
-                    }`}
+                className={` w-full`}
             >
+                <SideNavbar />
                 <Outlet />
             </div>
         </div>

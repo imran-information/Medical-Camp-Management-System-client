@@ -19,6 +19,8 @@ import { Button } from '@mui/material';
 import useOrganizer from '../../../hooks/useOrganizer';
 import Swal from 'sweetalert2';
 import LoadingSpinner from '../LoadingSpinner';
+import { Brightness4, Brightness7 } from '@mui/icons-material';
+import { useState } from 'react';
 
 const Navbar = () => {
   const { user, logOut } = useAuth()
@@ -26,6 +28,7 @@ const Navbar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
+  const [darkMode, setDarkMode] = useState(false);  // State to manage dark mode
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -54,13 +57,24 @@ const Navbar = () => {
   // if (isLoading) return <LoadingSpinner />
 
   const links = <>
-    <li><NavLink className="hover:bg-primary hover:text-white hover:font-bold"  to='/'>Home</NavLink></li>
+    <li><NavLink className="hover:bg-primary hover:text-white hover:font-bold" to='/'>Home</NavLink></li>
     <li><NavLink className="hover:bg-primary hover:text-white hover:font-bold" to='/available-camps'>Available Camps</NavLink></li>
     <li><NavLink className="hover:bg-primary hover:text-white hover:font-bold" to='/Services'>Services</NavLink></li>
-    <li><NavLink className="hover:bg-primary hover:text-white hover:font-bold" to='/contacts'>Contact Us</NavLink></li>
-    <li><NavLink className="hover:bg-primary hover:text-white hover:font-bold" to='/about-us'>About Us</NavLink></li>
-  </>
+    {
+      user ? (
+        <>
+          <li><NavLink className="hover:bg-primary hover:text-white hover:font-bold" to='/contacts'>Contact Us</NavLink></li>
+          <li><NavLink className="hover:bg-primary hover:text-white hover:font-bold" to='/about-us'>About Us</NavLink></li>
+        </>
+      ) : (
 
+        ''
+      )
+    }
+  </>
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
   return (
     <div className='fixed w-full z-10 shadow-sm '>
       <div className="navbar py-1 bg-background md:px-10 px-0">
@@ -110,6 +124,12 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end">
+          {/* Dark/Light Mode Toggle */}
+          <div className='mr-5' whileHover={{ scale: 1.1 }}>
+            <IconButton color="inherit" onClick={toggleDarkMode}>
+              {darkMode ? <Brightness7 /> : <Brightness4 />}
+            </IconButton>
+          </div>
           {/* Conditional User Authentication */}
           {!user ? (
             <Link to="/login" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" >

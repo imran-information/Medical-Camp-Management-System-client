@@ -12,6 +12,7 @@ import NewsletterSubscription from '../../components/Home/NewsletterSubscription
 import ContactSection from '../../components/Home/ContactSection/ContactSection';
 import { Helmet } from 'react-helmet-async';
 import MarqueeSlider from '../../components/Marquee/MarqueeSlider';
+import MedicalCampPromotion from '../../components/Home/MedicalCampPromotion/MedicalCampPromotion';
 
 const Home = () => {
     return (
@@ -46,6 +47,8 @@ const Home = () => {
             {/* Sponsors and Partners */}
             <SponsorsAndPartners />
 
+            {/* MedicalCampPromotion */}
+            <MedicalCampPromotion />
             {/* About Us */}
             <AboutUs />
 
