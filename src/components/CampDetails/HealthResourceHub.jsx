@@ -20,12 +20,14 @@ const HealthResourceHub = () => {
     // console.log(resources);
 
     return (
-        <div className='my-20 px-5 container mx-auto'>
-            <Heading center={true} title={"Health Resource Hub"} subtitle={"Your Go-To Resource for Expert Health Tips, Vital Information, and Tools to Empower Your Wellness Journey."} />
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-6">
-                {
-                    resources.map((resource) => <HealthResourceCard key={resource._id} resource={resource} />)
-                }
+        <div className="dark:bg-neutral-800">
+            <div className='py-20 px-5 container mx-auto'>
+                <Heading center={true} title={"Health Resource Hub"} subtitle={"Your Go-To Resource for Expert Health Tips, Vital Information, and Tools to Empower Your Wellness Journey."} />
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-6">
+                    {
+                        resources.map((resource) => <HealthResourceCard key={resource._id} resource={resource} />)
+                    }
+                </div>
             </div>
         </div>
     );

@@ -27,15 +27,15 @@ const KeyFeatures = () => {
     ];
 
     return (
-        <section className="bg-gray-50 py-20  ">
+        <section className="bg-gray-50 py-20  dark:bg-neutral-900">
             {/* Section Header */}
             <Heading center title={"Key Features"} subtitle={" Our solution offers a comprehensive suite of features designed to help you organize and manage medical camps more effectively."} />
             {/* Features Section */}
-            <div className="container mx-auto px-6  grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="container mx-auto px-6  grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 {features.map((feature, index) => (
                     <motion.div
                         key={index}
-                        className="bg-white shadow-lg rounded-xl p-8 flex flex-col items-center text-center transform transition-all duration-300 hover:shadow-xl"
+                        className="bg-white dark:bg-neutral-800 shadow-lg rounded-xl p-8 flex flex-col items-center text-center transform transition-all duration-300 hover:shadow-xl"
                         whileHover={{ scale: 1.05 }}
                     >
                         <motion.div
@@ -46,8 +46,8 @@ const KeyFeatures = () => {
                         >
                             {feature.icon}
                         </motion.div>
-                        <h3 className="text-2xl font-semibold text-gray-800 mb-3">{feature.title}</h3>
-                        <p className="text-gray-600 text-sm">{feature.text}</p>
+                        <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-300 mb-3">{feature.title}</h3>
+                        <p className="text-gray-600 dark:text-gray-400 text-base">{feature.text}</p>
                     </motion.div>
                 ))}
             </div>

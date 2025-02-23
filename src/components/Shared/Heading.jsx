@@ -7,7 +7,7 @@ const Heading = ({ title, subtitle, center }) => {
       <p className="flex justify-center my-3">
         <FaHeartbeat className='text-2xl text-primary' />
       </p>
-      <div className=' text-lg text-gray-600 leading-relaxed mb-12'>{subtitle}</div>
+      <div className=' text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-12'>{subtitle}</div>
     </div >
   )
 }

@@ -21,20 +21,23 @@ const CampShowcase = () => {
     if (isLoading) return <LoadingSpinner />
 
     return (
-        <div className="container mx-auto px-6 py-20">
-            <Heading title={"Popular Medical Camps"} subtitle={"Top Medical Camps with Maximum Participation Top Medical Camps with Maximum Participation"} center={true} />
-            {/* Camp Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-6 ">
-                {
-                    popularCamps.map((camp, ind) => <CampCard key={ind} camp={camp} />)
-                }
-            </div>
+        <div className="dark:bg-neutral-900 ">
+
+            <div className="container mx-auto px-6 py-20">
+                <Heading title={"Popular Medical Camps"} subtitle={"Top Medical Camps with Maximum Participation Top Medical Camps with Maximum Participation"} center={true} />
+                {/* Camp Cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-6 ">
+                    {
+                        popularCamps.map((camp, ind) => <CampCard key={ind} camp={camp} />)
+                    }
+                </div>
 
 
 
-            {/* See All Camps Button */}
-            <div className="text-center mt-6">
-                <Button onClick={() => navigate("/available-camps")} variant="contained">See All Camps</Button>
+                {/* See All Camps Button */}
+                <div className="text-center mt-6">
+                    <Button onClick={() => navigate("/available-camps")} variant="contained">See All Camps</Button>
+                </div>
             </div>
         </div>
     );

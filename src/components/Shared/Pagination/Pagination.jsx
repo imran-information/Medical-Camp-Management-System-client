@@ -6,8 +6,8 @@ const Pagination = ({ campCount, page, setPage, rowsPerPage, setRowsPerPage }) =
     const handleChangeRowsPerPage = (event) => setRowsPerPage(+event.target.value);
 
     return (
-        <div>
-            <MuiTablePagination
+        <div >
+            <MuiTablePagination className='dark:text-gray-300'
                 component="div"
                 count={campCount}
                 page={page}

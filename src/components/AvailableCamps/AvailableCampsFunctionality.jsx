@@ -34,12 +34,12 @@ const AvailableCampsFunctionality = () => {
                     placeholder="Search camps..."
                     value={searchCamp}
                     onChange={(e) => setSearchCamp(e.target.value)}
-                    className="border rounded p-2 w-full md:w-1/2"
+                    className="border rounded p-2 w-full md:w-1/2 bg-white dark:bg-neutral-800 dark:text-gray-300"
                 />
                 <select
                     value={sortOption}
                     onChange={(e) => setSortOption(e.target.value)}
-                    className="border rounded p-2 w-full md:w-1/4"
+                    className="border rounded p-2 w-full md:w-1/4 bg-white dark:bg-neutral-800 dark:text-gray-300"
                 >
                     <option className='text-primary' value="">Sort by</option>
                     <option value="participantCount">Most Registered</option>
@@ -48,7 +48,7 @@ const AvailableCampsFunctionality = () => {
                 </select>
                 <button
                     onClick={() => setLayout(layout === 'three' ? 'two' : 'three')}
-                    className="border rounded p-2"
+                    className="border rounded p-2 bg-white dark:bg-neutral-800 dark:text-gray-300"
                 >
                     Toggle Layout
                 </button>

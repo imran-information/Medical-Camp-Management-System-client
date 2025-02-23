@@ -18,7 +18,7 @@ const Feedbacks = () => {
     if (error) return <p className="text-center text-red-500 text-lg">Failed to load feedbacks.</p>;
 
     return (
-        <div className="bg-gray-50 py-20  ">
+        <div className="bg-gray-50 py-20  dark:bg-neutral-900">
             <div className="container mx-auto   ">
                 {/* Page Heading */}
                 <Heading

@@ -1,6 +1,6 @@
 import { Link, Navigate, NavLink, useNavigate } from 'react-router-dom'
 import avatarImg from '../../../assets/images/placeholder.jpg'
-import logo from '../../../assets/images/logo.png'
+import logo from '../../../assets/images/logo-1.png'
 import useAuth from '../../../hooks/useAuth'
 import * as React from 'react';
 import Box from '@mui/material/Box';
@@ -21,6 +21,7 @@ import Swal from 'sweetalert2';
 import LoadingSpinner from '../LoadingSpinner';
 import { Brightness4, Brightness7 } from '@mui/icons-material';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 const Navbar = () => {
   const { user, logOut } = useAuth()
@@ -54,7 +55,35 @@ const Navbar = () => {
     navigate('/signup')
     await logOut()
   }
-  // if (isLoading) return <LoadingSpinner />
+  useEffect(() => {
+    // Initially set dark mode based on localStorage or default to dark mode
+    const storedTheme = localStorage.getItem('theme');
+    if (storedTheme) {
+      setDarkMode(storedTheme === 'dark');
+    } else {
+      setDarkMode(true); // Set dark mode as default
+    }
+
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
+
+  // ✅ Toggle dark mode and update localStorage
+  const toggleDarkMode = () => {
+    const newDarkMode = !darkMode;
+    setDarkMode(newDarkMode);
+    localStorage.setItem('theme', newDarkMode ? 'dark' : 'light');
+
+    if (newDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  };
+
 
   const links = <>
     <li><NavLink className="hover:bg-primary hover:text-white hover:font-bold" to='/'>Home</NavLink></li>
@@ -72,12 +101,10 @@ const Navbar = () => {
       )
     }
   </>
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
+
   return (
     <div className='fixed w-full z-10 shadow-sm '>
-      <div className="navbar py-1 bg-background md:px-10 px-0">
+      <div className="navbar py-1 bg-background dark:bg-neutral-900 dark:text-primary md:px-10 px-0">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -113,13 +140,13 @@ const Navbar = () => {
 
           <div className="">
             <Link to='/' className='flex items-center  bg-inherit'>
-              <img src={logo} alt='logo' className='bg-inherit w-20 relative pb-5 hidden lg:block' />
+              <img src={logo} alt='logo' className='bg-inherit w-20 elative pb-2 hidden lg:block' />
               <h4 className='text-xl md:text-2xl font-semibold '>Medical Camp</h4>
             </Link>
           </div>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
+          <ul className="menu menu-horizontal px-1 font-medium">
             {links}
           </ul>
         </div>

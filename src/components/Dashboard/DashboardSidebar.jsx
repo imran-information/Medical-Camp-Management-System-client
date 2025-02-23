@@ -1,164 +1,228 @@
-import React, { useState } from 'react';
-import { FaHome, FaPlusCircle, FaCreditCard } from 'react-icons/fa';
-import { FaIdCard } from "react-icons/fa6";
+import React, { useEffect, useState } from "react";
+import { NavLink, Outlet } from "react-router-dom";
+import {
+    AppBar,
+    Toolbar,
+    IconButton,
+    Typography,
+    Drawer,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    Divider,
+    Avatar,
+    Menu,
+    MenuItem,
+} from "@mui/material";
+import {
+    Menu as MenuIcon,
+    Home as HomeIcon,
+    AccountCircle,
+    Brightness4,
+    Brightness7,
+    Notifications,
+} from "@mui/icons-material";
+import { FaPlusCircle, FaCreditCard } from "react-icons/fa";
 import { MdOutlineCreditScore } from "react-icons/md";
-import { Link, NavLink, Outlet } from 'react-router-dom';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import { IoCallSharp } from "react-icons/io5";
-import profile from '../../assets/images/doctor.png';
-import '../../components/Dashboard/DashboardSidebar.css';
-import useOrganizer from '../../hooks/useOrganizer';
-import LoadingSpinner from '../Shared/LoadingSpinner';
 import { IoMdAnalytics } from "react-icons/io";
-import { HiMenuAlt3 } from "react-icons/hi";
-import SideNavbar from "../Shared/SideNavbar/SideNavbar.jsx";
+import useAuth from "../../hooks/useAuth.js";
+import useOrganizer from "../../hooks/useOrganizer";
+import LoadingSpinner from "../Shared/LoadingSpinner";
+import Swal from "sweetalert2";
+import '../Dashboard/DashboardSidebar.css'
+const drawerWidth = 300;
+
+
 const Dashboard = () => {
     const [isOrganizer, isLoading] = useOrganizer();
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Sidebar toggle state
+    const { user, logOut } = useAuth();
+    const [mobileOpen, setMobileOpen] = useState(true);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [notifAnchorEl, setNotifAnchorEl] = useState(null);
+    const [darkMode, setDarkMode] = useState(false);
+
+    const handleDrawerToggle = () => {
+        setMobileOpen(!mobileOpen);
+    };
+
+    const handleLogOut = async () => {
+        await logOut();
+        Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Logged out successfully",
+            showConfirmButton: false,
+            timer: 1500,
+        });
+    };
+
+    const handleMenuOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleNotifOpen = (event) => {
+        setNotifAnchorEl(event.currentTarget);
+    };
+
+    const handleNotifClose = () => {
+        setNotifAnchorEl(null);
+    };
+
+
+    useEffect(() => {
+        // Initially set dark mode based on localStorage or default to dark mode
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme) {
+            setDarkMode(storedTheme === 'dark');
+        } else {
+            setDarkMode(true); // Set dark mode as default
+        }
+
+        if (darkMode) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    }, [darkMode]);
+
+    // ✅ Toggle dark mode and update localStorage
+    const toggleDarkMode = () => {
+        const newDarkMode = !darkMode;
+        setDarkMode(newDarkMode);
+        localStorage.setItem('theme', newDarkMode ? 'dark' : 'light');
+
+        if (newDarkMode) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    };
+
+    const drawer = (
+        <div className="">
+            <Toolbar>
+                <Typography variant="h6" sx={{ flexGrow: 1 }}>Medical Camp</Typography>
+            </Toolbar>
+            <Divider />
+            <List>
+                {isOrganizer ? (
+                    <>
+                        <ListItem component={NavLink} to="/dashboard/organizer-profile" className={({ isActive }) => (isActive ? "active" : "")}>
+                            <ListItemIcon><AccountCircle /></ListItemIcon>
+                            <ListItemText primary="Organizer Profile" />
+                        </ListItem>
+                        <ListItem component={NavLink} to="/dashboard/add-camp" className={({ isActive }) => (isActive ? "active" : "")}>
+                            <ListItemIcon><FaPlusCircle /></ListItemIcon>
+                            <ListItemText primary="Add Camp" />
+                        </ListItem>
+                        <ListItem component={NavLink} to="/dashboard/manage-camps" className={({ isActive }) => (isActive ? "active" : "")}>
+                            <ListItemIcon><FaCreditCard /></ListItemIcon>
+                            <ListItemText primary="Manage Camps" />
+                        </ListItem>
+                        <ListItem component={NavLink} to="/dashboard/manage-registered-camps" className={({ isActive }) => (isActive ? "active" : "")}>
+                            <ListItemIcon><MdOutlineCreditScore /></ListItemIcon>
+                            <ListItemText primary="Manage Registered Camps" />
+                        </ListItem>
+                    </>
+                ) : (
+                    <>
+                        <ListItem component={NavLink} to="/dashboard/participant-profile" className={({ isActive }) => (isActive ? "active" : "")}>
+                            <ListItemIcon><AccountCircle /></ListItemIcon>
+                            <ListItemText primary="Participant Profile" />
+                        </ListItem>
+                        <ListItem component={NavLink} to="/dashboard/analytics" className={({ isActive }) => (isActive ? "active  " : "")}>
+                            <ListItemIcon><IoMdAnalytics /></ListItemIcon>
+                            <ListItemText primary="Analytics" />
+                        </ListItem>
+                    </>
+                )}
+            </List>
+            <Divider />
+            <List>
+                <ListItem component={NavLink} to="/" className={({ isActive }) => (isActive ? "active " : "")}>
+                    <ListItemIcon><HomeIcon /></ListItemIcon>
+                    <ListItemText primary="Home" />
+                </ListItem>
+            </List>
+
+        </div>
+    );
 
     if (isLoading) return <LoadingSpinner />;
 
     return (
-        <div className="flex">
+        <div style={{ display: "flex" }}>
+            {/* Navbar */}
+            <AppBar className=" bg-primary  dark:bg-neutral-900"
+                position="fixed"
+                sx={{
+                    width: mobileOpen ? `calc(100% - ${drawerWidth}px)` : "100%",
+                    ml: mobileOpen ? `${drawerWidth}px` : 0,
+                    transition: "width 0.3s ease, margin 0.3s ease",
+                }}
+            >
+                <Toolbar>
+                    <IconButton color="inherit" edge="start" onClick={handleDrawerToggle} sx={{ mr: 2 }}>
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h6" sx={{ flexGrow: 1 }}>Dashboard</Typography>
+                    {/* Notifications */}
+                    <IconButton color="inherit" onClick={handleNotifOpen}>
+                        <Notifications />
+                    </IconButton>
+                    <Menu anchorEl={notifAnchorEl} open={Boolean(notifAnchorEl)} onClose={handleNotifClose}>
+                        <MenuItem onClick={handleNotifClose}>No new notifications</MenuItem>
+                    </Menu>
+                    {/* Dark Mode */}
+                    <IconButton color="inherit" onClick={() => toggleDarkMode(!darkMode)}>
+                        {darkMode ? <Brightness7 /> : <Brightness4 />}
+                    </IconButton>
+                    {/* User Avatar */}
+                    <IconButton onClick={handleMenuOpen}>
+                        <Avatar src={user?.photoURL || "/default-avatar.png"} />
+                    </IconButton>
+                    <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
+                        <MenuItem onClick={handleMenuClose}>{user?.displayName || "User"}</MenuItem>
+                        <MenuItem onClick={handleLogOut}>Logout</MenuItem>
+                    </Menu>
+                </Toolbar>
+            </AppBar>
+
             {/* Sidebar */}
-            <div
-                className={`fixed z-50 top-0 left-0 bg-primary text-white p-5 h-screen transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-                    } transition-transform duration-300 w-64 sm:w-72 md:w-80`}
+            <Drawer
+                variant="persistent"
+                open={mobileOpen}
+                sx={{
+                    "& .MuiDrawer-paper": {
+                        width: drawerWidth,
+                        boxSizing: "border-box",
+                        transition: "width 0.3s ease",
+                    },
+                }}
             >
-                <Link to="/" className="flex items-center bg-inherit">
-                    <DashboardIcon />
-                    <h4 className="text-2xl font-semibold ml-2">Medical Camp</h4>
-                </Link>
+                {drawer}
+            </Drawer>
 
-                {/* Organizer Profile and Camp Management */}
-                {isOrganizer ? (
-                    <ul className="mt-16 uppercase">
-                        <li>
-                            <NavLink
-                                className="flex items-center gap-2 my-4 font-medium"
-                                to="/dashboard/organizer-profile"
-                            >
-                                <img className="w-5" src={profile} alt="" />
-                                Organizer Profile
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                className="flex items-center gap-2 my-4 font-medium"
-                                to="/dashboard/add-camp"
-                            >
-                                <FaPlusCircle className="text-xl font-bold" />
-                                Add Camp
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                className="flex items-center gap-2 my-4 font-medium"
-                                to="/dashboard/manage-camps"
-                            >
-                                <FaCreditCard className="text-xl font-bold" />
-                                Manage Camps
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                className="flex items-center gap-2 my-4 font-medium"
-                                to="/dashboard/manage-registered-camps"
-                            >
-                                <MdOutlineCreditScore className="text-xl font-bold" />
-                                Manage Registered Camps
-                            </NavLink>
-                        </li>
-                    </ul>
-                ) : (
-                    <ul className="mt-16 uppercase">
-                        <li>
-                            <NavLink
-                                className="flex items-center gap-2 my-4 font-medium"
-                                to="/dashboard/participant-profile"
-                            >
-                                <img className="w-5" src={profile} alt="" />
-                                Participant Profile
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                className="flex items-center gap-2 my-4 font-medium"
-                                to="/dashboard/analytics"
-                            >
-                                <IoMdAnalytics className="text-xl font-bold" />
-                                Analytics
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                className="flex items-center gap-2 my-4 font-medium"
-                                to="/dashboard/registered-camps"
-                            >
-                                <FaCreditCard className="text-xl font-bold" />
-                                Registered Camps
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                className="flex items-center gap-2 my-4 font-medium"
-                                to="/dashboard/payment-history"
-                            >
-                                <MdOutlineCreditScore className="text-xl font-bold" />
-                                Payment History
-                            </NavLink>
-                        </li>
-                    </ul>
-                )}
-
-                {/* Common Links */}
-                <div className="divider"></div>
-                <ul className="uppercase">
-                    <li>
-                        <NavLink
-                            className="flex items-center gap-2 my-4 font-medium"
-                            to="/"
-                        >
-                            <FaHome className="text-xl font-bold" />
-                            Home
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink
-                            className="flex items-center gap-2 my-4 font-medium"
-                            to="/available-camps"
-                        >
-                            <FaIdCard className="text-xl font-bold" />
-                            Available Camps
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink
-                            className="flex items-center gap-2 my-4 font-medium"
-                            to="/contacts"
-                        >
-                            <IoCallSharp className="text-xl font-bold" />
-                            Contact Us
-                        </NavLink>
-                    </li>
-                </ul>
-            </div>
-
-            {/* Toggle Button for Sidebar */}
-            <button
-                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                className="md:hidden fixed top-5 left-5 bg-lightBlue text-white rounded-full p-2 z-50"
+            {/* Content Area */}
+            <main className="dark:bg-neutral-800"
+                style={{
+                    flexGrow: 1,
+                    padding: "20px",
+                    marginTop: "64px",
+                    transition: "margin-left 0.3s ease",
+                    marginLeft: mobileOpen ? `${drawerWidth}px` : 0,
+                }}
             >
-                <HiMenuAlt3 size={24} />
-            </button>
+                <div className="xl:px-10 ">
 
-            {/* Main Content */}
-            <div
-                className={` w-full`}
-            >
-                <SideNavbar />
-                <Outlet />
-            </div>
+                    <Outlet />
+                </div>
+            </main>
         </div>
     );
 };

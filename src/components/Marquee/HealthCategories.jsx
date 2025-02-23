@@ -72,7 +72,7 @@ const HealthCategories = () => {
                     <Grid key={index}>
                         <Card data-aos="flip-left"
                             data-aos-easing="ease-out-cubic"
-                            data-aos-duration="2000" className="ml-10 cursor-pointer" sx={{
+                            data-aos-duration="2000" className="ml-10 cursor-pointer dark:bg-neutral-800" sx={{
                                 transition: 'transform 0.3s, box-shadow 0.3s',
                                 '&:hover': {
                                     transform: 'scale(1.05)',
@@ -80,11 +80,11 @@ const HealthCategories = () => {
                                 },
                             }} variant="outlined" style={{ textAlign: "center" }}>
                             <CardContent className="w-96">
-                                <div style={{ color: "#1976d2", }}>
+                                <div style={{ color: "#2563eb", }}>
                                     {category.icon}
                                 </div>
-                                <Typography variant="h6">{category.name}</Typography>
-                                <Typography variant="h16">{category.description}</Typography>
+                                <Typography className="dark:text-primary" variant="h6">{category.name}</Typography>
+                                <Typography className="dark:text-gray-400" variant="h16">{category.description}</Typography>
                             </CardContent>
                         </Card>
                     </Grid>

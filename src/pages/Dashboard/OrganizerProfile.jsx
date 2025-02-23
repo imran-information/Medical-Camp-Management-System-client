@@ -4,7 +4,7 @@ import UpdateProfile from '../../components/Shared/UpdateProfile/UpdateProfile';
 
 const OrganizerProfile = () => {
     return (
-        <div data-aos="fade-left" data-aos-duration="2000" className="">
+        <div data-aos="fade-left" data-aos-duration="2000" className="min-h-screen">
             <Helmet>
                 <title> Organizer Profile | Medical Camp Management System</title>
             </Helmet>

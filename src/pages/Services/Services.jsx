@@ -34,68 +34,73 @@ const Services = () => {
     );
 
     return (
-        <div className="container mx-auto" style={{ padding: "40px" }}>
-            <Helmet>
-                <title>Services | Medical Camp Management System</title>
-            </Helmet>
-            <Typography data-aos="fade-right" data-aos-duration="2000"
-                variant="h3"
-                align="center"
-                gutterBottom
-                style={{ marginBottom: "20px", fontWeight: "bold", color: "#1976d2" }}
-            >
-                <Heading center title={'Our Medical Services'} />
-            </Typography>
+        <div className="bg-gray-50 dark:bg-neutral-900">
+            <div className="container mx-auto px-5 py-24"  >
+                <Helmet>
+                    <title>Services | Medical Camp Management System</title>
+                </Helmet>
+                <Typography data-aos="fade-right" data-aos-duration="2000"
+                    variant="h3"
+                    align="center"
+                    gutterBottom
+                    style={{ marginBottom: "20px", fontWeight: "bold", color: "#1976d2" }}
+                >
+                    <Heading center title={'Our Medical Services'} />
+                </Typography>
 
-            {/* Search Bar */}
-            <TextField data-aos="fade-right" data-aos-duration="2000"
-                label="Search Services"
-                variant="outlined"
-                fullWidth
-                style={{ marginBottom: "40px" }}
-                onChange={(e) => setSearch(e.target.value)}
-            />
+                {/* Search Bar */}
+                <TextField className="bg-white dark:bg-neutral-800 dark:text-gray-300" data-aos="fade-right" data-aos-duration="2000"
+                    label="Search Services"
+                    variant="outlined"
+                    fullWidth
+                    style={{ marginBottom: "40px" }}
+                    onChange={(e) => setSearch(e.target.value)}
+                />
 
-            <Grid container spacing={4}>
-                {filteredServices.length > 0 ? (
-                    filteredServices.map((service, index) => (
-                        <Grid data-aos="flip-right" data-aos-duration="2000" item xs={12} sm={6} md={4} lg={3} key={index}>
-                            <Card
-                                style={{
-                                    transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                                    "&:hover": {
-                                        transform: "scale(1.05)",
-                                        boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)",
-                                    },
-                                    textAlign: "center",
-                                    padding: "20px",
-                                    border: "1px solid #e0e0e0",
-                                    borderRadius: "10px",
-                                }}
-                            >
-                                <CardContent >
-                                    <div style={{ color: "#1976d2", marginBottom: "15px" }}>
-                                        {service.icon}
-                                    </div>
-                                    <Typography variant="h6" style={{ fontWeight: "bold" }}>
-                                        {service.name}
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        style={{ marginTop: "10px", color: "#555" }}
-                                    >
-                                        {service.description}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    ))
-                ) : (
-                    <Typography variant="h6" align="center" style={{ color: "#888" }}>
-                        No services found.
-                    </Typography>
-                )}
-            </Grid>
+                <Grid container spacing={4}>
+                    {filteredServices.length > 0 ? (
+                        filteredServices.map((service, index) => (
+                            <Grid data-aos="flip-right" data-aos-duration="2000" item xs={12} sm={6} md={4} lg={3} key={index}>
+                                <Card
+                                    className="bg-white dark:bg-neutral-800 dark:text-gray-300"
+                                    sx={{
+                                        transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                                        "&:hover": {
+                                            transform: "scale(1.05)",
+                                            boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)",
+                                        },
+                                        textAlign: "center",
+                                        padding: "20px",
+                                        border: "1px solid #e0e0e0",
+                                        borderRadius: "10px",
+                                    }}
+                                >
+                                    <CardContent>
+                                        <div style={{ color: "#2563eb", marginBottom: "15px" }}>
+                                            {service.icon}
+                                        </div>
+                                        <Typography className="text-primary" variant="h6" sx={{ fontWeight: "bold" }}>
+                                            {service.name}
+                                        </Typography>
+                                        <Typography
+                                            className="dark:text-gray-400 text-base"
+                                            variant="body2"
+                                            sx={{ marginTop: "10px" }}
+                                        >
+                                            {service.description}
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+
+                            </Grid>
+                        ))
+                    ) : (
+                        <Typography variant="h6" align="center" style={{ color: "#888" }}>
+                            No services found.
+                        </Typography>
+                    )}
+                </Grid>
+            </div>
         </div>
     );
 };

@@ -104,10 +104,10 @@ const UpdateProfile = () => {
                         src={profile.photo || 'default-profile.png'}
                         alt="Organizer Profile"
                         sx={{ width: 120, height: 120 }}
-                        className="mb-4 mx-auto"
+                        className="mb-4 mx-auto border-2 border-primary"
                     />
-                    <h2 className="text-2xl font-bold mb-2">{profile.name}</h2>
-                    <p className="text-gray-600 mb-4">Contact: {profile.email}</p>
+                    <h2 className="text-2xl font-bold mb-2 dark:text-gray-300">{profile.name}</h2>
+                    <p className="text-gray-600 mb-4 dark:text-gray-300">Contact: {profile.email}</p>
                     <Button
                         variant="contained"
                         color="primary"

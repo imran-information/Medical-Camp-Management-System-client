@@ -7,13 +7,15 @@ const AvailableCamps = () => {
 
 
     return (
-        <div className='container mx-auto px-6 py-10'>
-            <Helmet>
-                <title>Available Camps | Medical Camp Management System</title>
-            </Helmet>
-            <Heading center={true} title={"Available Camps"} subtitle={"Explore Upcoming Medical Camps: Your Path to Better Health Starts Here."} />
-            <AvailableCampsFunctionality />
+        <div className="bg-gray-50 dark:bg-neutral-900">
 
+            <div className='container mx-auto   py-24'>
+                <Helmet>
+                    <title>Available Camps | Medical Camp Management System</title>
+                </Helmet>
+                <Heading center={true} title={"Available Camps"} subtitle={"Explore Upcoming Medical Camps: Your Path to Better Health Starts Here."} />
+                <AvailableCampsFunctionality />
+            </div>
         </div>
     );
 };

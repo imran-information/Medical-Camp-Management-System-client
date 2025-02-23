@@ -3,7 +3,7 @@ import HealthCategories from "./HealthCategories";
 
 const MarqueeSlider = () => {
     return (
-        <div className="bg-primary py-3  text-white">
+        <div className="bg-primary dark:bg-neutral-900 py-3 ">
             <Marquee pauseOnHover={true} >
                 <HealthCategories />
             </Marquee>

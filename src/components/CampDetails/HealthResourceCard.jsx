@@ -7,7 +7,7 @@ const HealthResourceCard = ({ resource }) => {
 
     return (
         <Link to={url} className="block transition-transform duration-300 hover:scale-105" style={{ textDecoration: 'none' }}>
-            <Card sx={{
+            <Card className='dark:bg-neutral-900' sx={{
                 maxWidth: 360,
                 height: 500, // Ensures uniform card height
                 borderRadius: 3,
@@ -38,17 +38,17 @@ const HealthResourceCard = ({ resource }) => {
                         </Typography>
 
                         {/* Category */}
-                        <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 500, mb: 1 }}>
+                        <Typography className='dark:text-gray-300' variant="body2" sx={{ color: 'text.secondary', fontWeight: 500, mb: 1 }}>
                             {category}
                         </Typography>
 
                         {/* Date */}
-                        <Typography variant="caption" sx={{ color: 'text.disabled', mb: 1, display: 'block' }}>
+                        <Typography className='dark:text-gray-400' variant="caption" sx={{ color: 'text.disabled', mb: 1, display: 'block' }}>
                             {publication_date}
                         </Typography>
 
                         {/* Description */}
-                        <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.5 }}>
+                        <Typography className='dark:text-gray-400' variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.5 }}>
                             {description.length > 100 ? `${description.slice(0, 100)}...` : description}
                         </Typography>
                     </CardContent>

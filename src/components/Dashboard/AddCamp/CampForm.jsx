@@ -57,12 +57,11 @@ const CampForm = () => {
     };
 
     return (
-        <Box
+        <Box className='max-w-2xl'
             component="form"
             onSubmit={handleSubmit(onSubmit)}
             sx={{
                 width: '100%',
-                maxWidth: '700px',
                 margin: 'auto',
                 padding: 4,
                 bgcolor: 'background.paper',

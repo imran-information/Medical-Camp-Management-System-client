@@ -11,7 +11,7 @@ import CardActions from '@mui/material/CardActions';
 const CampCard = ({ camp }) => {
     const navigate = useNavigate();
     return (
-        <Card 
+        <Card className='dark:bg-neutral-800 dark:text-gray-300'
             sx={{
                 maxWidth: 400,
                 display: 'flex',
@@ -25,7 +25,7 @@ const CampCard = ({ camp }) => {
             }}
         >
             <Link to={`/camp-details/${camp._id}`} style={{ textDecoration: 'none' }}>
-                <CardActionArea>
+                <CardActionArea >
 
                     <CardMedia
                         component="img"
@@ -36,22 +36,22 @@ const CampCard = ({ camp }) => {
                             objectFit: 'cover',
                         }}
                     />
-                    <CardContent>
+                    <CardContent >
                         <Typography gutterBottom variant="h5" component="div">
                             {camp.name}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary">
+                        <Typography className='dark:text-gray-400' variant="body2" color="text.secondary">
                             <strong>Date:</strong> {camp.date} <br />
                             <strong>Time:</strong> {camp.time} <br />
                             <strong>Location:</strong> {camp.location}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary" mt={2}>
+                        <Typography className='dark:text-gray-400' variant="body2" color="text.secondary" mt={2}>
                             <strong>Healthcare Professional:</strong> {camp.healthcareProfessional}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary" mt={2}>
+                        <Typography className='dark:text-gray-400' variant="body2" color="text.secondary" mt={2}>
                             <strong>Fees:</strong> {camp.fees}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary" mt={2}>
+                        <Typography className='dark:text-gray-400' variant="body2" color="text.secondary" mt={2}>
                             <strong>Participants:</strong> {camp.participantCount ?? 'Not available'}
                         </Typography>
                     </CardContent>
